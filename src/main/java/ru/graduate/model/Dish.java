@@ -5,9 +5,11 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+
 @Entity
 @Table(name = "dishes")
-public class Dish extends AbstractBaseEntity{
+public class Dish extends AbstractNamedEntity{
 
     @ManyToOne
     @JoinColumn(name = "menu_id")

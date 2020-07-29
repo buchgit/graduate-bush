@@ -12,9 +12,6 @@ import ru.graduate.service.UserService;
 
 import java.util.List;
 
-import static ru.graduate.utils.ValidationUtil.checkNotFound;
-import static ru.graduate.utils.ValidationUtil.checkNotFoundWithId;
-
 @RestController
 @RequestMapping(UserController.REST_URL)
 public class UserController {

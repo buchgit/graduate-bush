@@ -12,7 +12,7 @@ import ru.graduate.model.Restaurant;
 @Transactional(readOnly = true)
 public interface RestaurantRepository extends JpaRepository<Restaurant,Integer> {
 
-    Restaurant getByName(String name);//должно магически цеплять по полю name
+    Restaurant getByName(String name);//'магически' цепляет просто по name!
 
     @Transactional
     @Modifying

@@ -30,21 +30,23 @@ public class DishController {
         this.repository = repository;
     }
 
-    //проверен-
+    //проверен+
     @GetMapping("/{id}")
     public Dish get(@PathVariable int id) {
         return service.get(id);
     }
+
     //проверен+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Dish> getAll(){
         return repository.findAll(Sort.by(Sort.Direction.DESC,"name"));
     }
 
-    //проверен-
+    //проверен+ но dish.menu в body прилетает как null
     @PostMapping
-    public ResponseEntity<Dish> create (@RequestBody Dish dish){
-        Dish created = service.create(dish);
+    public ResponseEntity<Dish> create (@RequestBody Dish dish,
+                                        @RequestParam int menuId){
+        Dish created = service.create(dish,menuId);
         URI responseUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(DISH_URL+"/{id}")
                 .buildAndExpand(created.getId())
@@ -52,34 +54,46 @@ public class DishController {
         return ResponseEntity.created(responseUri).body(created);
     }
 
-    //проверен-
+    //проверен+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id){
         service.delete(id);
     }
 
-    //проверен-
-    @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update (@PathVariable int id,@RequestBody Dish dish){
-        service.update(id,dish);
+    //проверен
+    /*
+    {
+        "id": 100023,
+        "name": "dish 666",
+        "menu": {
+            "id":100008
+            },
+        "price": 88.77
     }
-    //проверен -
+     */
+    @PutMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update (@RequestBody Dish dish){
+        service.update(dish);
+    }
+
+    //проверен +
+    //http://localhost:8080/dishes/name?name=dish 9
     @GetMapping(value = "/name",produces = MediaType.APPLICATION_JSON_VALUE)
     public Dish getByName(@RequestParam String name){
         return service.getByName(name);
     }
+
     //проверен +
     @GetMapping(value = "/menu",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Dish> getByMenu(@RequestParam String id){
-        Integer Id = Integer.parseInt(id);
-        return repository.getByMenu(Id);
+    public List<Dish> getByMenu(@RequestParam int id){
+        return repository.getByMenu(id);
     }
+
     //проверен -
     @GetMapping(value = "/restaurant",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Dish> getByRestaurant(@RequestParam String id){
-        Integer Id = Integer.parseInt(id);
-        return repository.getByRestaurant(Id);
+    public List<Dish> getByRestaurant(@RequestParam int id){
+        return repository.getByRestaurant(id);
     }
 }

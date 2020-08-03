@@ -2,6 +2,7 @@ package ru.graduate.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import ru.graduate.repository.DishRepository;
 import ru.graduate.service.DishService;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -91,9 +93,20 @@ public class DishController {
         return repository.getByMenu(id);
     }
 
-    //проверен -
+    //проверен +
+    /*
+    http://localhost:8080/dishes//restaurant?id=100003
+     */
     @GetMapping(value = "/restaurant",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Dish> getByRestaurant(@RequestParam int id){
         return repository.getByRestaurant(id);
+    }
+
+    //проверен +
+    //http://localhost:8080/dishes/between?startDate=2020-07-02&endDate=2020-07-02
+    @GetMapping(value = "/between",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Dish> getBetween(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  startDate,
+                                 @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  endDate){
+        return service.getBetween(startDate,endDate);
     }
 }

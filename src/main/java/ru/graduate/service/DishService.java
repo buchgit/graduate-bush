@@ -6,7 +6,11 @@ import org.springframework.util.Assert;
 import ru.graduate.model.Dish;
 import ru.graduate.repository.DishRepository;
 import ru.graduate.repository.MenuRepository;
+import ru.graduate.utils.TimeUtils;
 import ru.graduate.utils.ValidationUtil;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -48,7 +52,9 @@ public class DishService {
         return repository.getByMenu(menuId);
     }
 
-    public List<Dish> getByRestaurant(int restaurantId){
-        return repository.getByRestaurant(restaurantId);
+    public List<Dish> getBetween(LocalDate startDate, LocalDate endDate) {
+        LocalDateTime startOfDay = TimeUtils.toBeginOfDay(startDate);
+        LocalDateTime endOfDay = TimeUtils.toEndOfDay(endDate);
+        return repository.getBetween(startOfDay, endOfDay);
     }
 }

@@ -8,11 +8,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.graduate.model.Dish;
 import ru.graduate.model.Menu;
 import ru.graduate.repository.MenuRepository;
 import ru.graduate.service.MenuService;
-
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
@@ -46,17 +44,18 @@ public class MenuController {
         return repository.findAll(Sort.by(Sort.Direction.DESC,"date"));
     }
 
-//    //проверен-
-//    @PostMapping
-//    public ResponseEntity<Menu> create (@RequestBody Menu dish,
-//                                        @RequestParam int menuId){
-//        Menu created = service.create(dish,menuId);
-//        URI responseUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-//                .path(MENU_URL+"/{id}")
-//                .buildAndExpand(created.getId())
-//                .toUri();
-//        return ResponseEntity.created(responseUri).body(created);
-//    }
+    //проверен+
+    //http://localhost:8080/menus?restaurantId=100002&date=2020-07-06
+    @PostMapping
+    public ResponseEntity<Menu> create (@RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                        @RequestParam int restaurantId){
+        Menu created = service.create(date,restaurantId);
+        URI responseUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(MENU_URL+"/{id}")
+                .buildAndExpand(created.getId())
+                .toUri();
+        return ResponseEntity.created(responseUri).body(created);
+    }
 
     //проверен+
     //http://localhost:8080/menus/100007
@@ -66,11 +65,20 @@ public class MenuController {
         service.delete(id);
     }
 
-    //проверен-
+    //проверен+
+    /*
+    {
+        "id": 100010,
+        "date": "2020-08-11T00:00:00",
+        "restaurant": {
+            "id": 100003
+        }
+    }
+     */
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update (@RequestBody Menu dish){
-        service.update(dish);
+    public void update (@RequestBody Menu menu){
+        service.update(menu);
     }
 
     //проверен +
@@ -87,8 +95,4 @@ public class MenuController {
                                  @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  endDate){
         return service.getBetween(startDate,endDate);
     }
-
-
-
-
 }

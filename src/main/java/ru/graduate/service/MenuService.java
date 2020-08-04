@@ -3,9 +3,9 @@ package ru.graduate.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import ru.graduate.model.Dish;
 import ru.graduate.model.Menu;
 import ru.graduate.repository.MenuRepository;
+import ru.graduate.repository.RestaurantRepository;
 import ru.graduate.utils.TimeUtils;
 import ru.graduate.utils.ValidationUtil;
 
@@ -16,17 +16,20 @@ import java.util.List;
 @Service
 public class MenuService {
     public final MenuRepository repository;
+    public final RestaurantRepository restaurantRepository;
 
     @Autowired
-    public MenuService(MenuRepository menuRepository) {
+    public MenuService(MenuRepository menuRepository, RestaurantRepository restaurantRepository) {
         this.repository = menuRepository;
+        this.restaurantRepository = restaurantRepository;
     }
 
-//    public Menu create(Menu menu, int restaurantId){
-//        Assert.notNull(menu,"Dish must not be null");
-//        menu.setRestaurant(repository.getOne(restaurantId));
-//        return repository.save(menu);
-//    }
+    public Menu create(LocalDate date, int restaurantId){
+        Assert.notNull(date,"Menu date must not be null");
+        LocalDateTime startOfDay = TimeUtils.toBeginOfDay(date);
+        Menu menu = new Menu(startOfDay,restaurantRepository.getOne(restaurantId));
+        return repository.save(menu);
+    }
 
     public Menu get(int id){
         return ValidationUtil.checkNotFoundWithId(repository.findById(id).orElse(null),id);

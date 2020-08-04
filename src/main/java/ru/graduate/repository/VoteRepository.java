@@ -6,30 +6,33 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.graduate.model.Menu;
+import ru.graduate.model.Dish;
+import ru.graduate.model.Vote;
+
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public interface MenuRepository extends JpaRepository <Menu,Integer>{
+public interface VoteRepository extends JpaRepository<Vote,Integer> {
+
     @Transactional
     @Modifying
-    @Query("delete from Menu m where m.id=:id")
+    @Query("delete from Vote v where v.id=:id")
     int delete(@Param("id") int id);
 
     @Transactional
     @Modifying
-    Menu save(Menu menu);
+    Vote save(Vote vote);
 
-    @Query("select m FROM Menu m where m.id =:id order by m.date")
-    List<Menu> get(@Param("id") int id);
+    @Query("select v FROM Vote v where v.user.id =:userId order by v.date")
+    List<Vote> getByUser(@Param("userId") int userId);
 
-    @Query("select m from Menu m where m.restaurant.id =:restaurantId")
-    List<Menu> getByRestaurant(@Param("restaurantId") int restaurantId);
+    @Query("select v from Vote v where v.restaurant.id =:restaurantId")
+    List<Vote> getByRestaurant(@Param("restaurantId") int restaurantId);
 
-    @Query("select m from Menu m where m.date >=:startDate and m.date<=:endDate")
-    List<Menu> getBetween(@Param("startDate") @NotNull LocalDateTime startDate,
+    @Query("select v from Vote v where v.date >=:startDate and v.date<=:endDate")
+    List<Vote> getBetween(@Param("startDate") @NotNull LocalDateTime startDate,
                           @Param("endDate") @NotNull LocalDateTime endDate);
 }

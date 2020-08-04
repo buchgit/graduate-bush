@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = VoteController.VOTE_URL)
+@RequestMapping(VoteController.VOTE_URL)
 public class VoteController {
     static final String VOTE_URL = "/votes";
 
@@ -27,9 +27,28 @@ public class VoteController {
         this.repository = repository;
         this.service = service;
     }
-    //проверен -
+
+    //проверен +
+    //http://localhost:8080/votes
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Vote> getAll(){
+        return repository.findAll();
+    }
+
+    //проверен +
+    //http://localhost:8080/votes?restaurantId=100002&date=2020-08-04&userId=100001
+    /* response
+    {
+        "id": 100029,
+        "user": null,
+        "restaurant": null,
+        "date": "2020-08-04T00:00:00"
+    }
+     */
     @PostMapping
-    public ResponseEntity<Vote> create (@RequestParam int restaurantId, @RequestParam LocalDate date, @RequestParam int userId){
+    public ResponseEntity<Vote> create (@RequestParam int restaurantId,
+                                        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  date,
+                                        @RequestParam int userId){
         Vote created = service.create(restaurantId, date, userId);
         URI responseUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(VOTE_URL+"/{id}")
@@ -37,41 +56,61 @@ public class VoteController {
                 .toUri();
         return ResponseEntity.created(responseUri).body(created);
     }
-    //проверен -
+
+    //проверен +
+    //http://localhost:8080/votes/100012
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public Vote get(@PathVariable int id){
         return service.get(id);
     }
-    //проверен -
+
+    //проверен +
+    //http://localhost:8080/votes/user?userId=100000
     @GetMapping(value = "/user",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Vote> getByUser(@RequestParam int userId){
         return service.getByUser(userId);
     }
-    //проверен -
+
+    //проверен +
+    //http://localhost:8080/votes/100012
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id){
         service.delete(id);
     }
-    //проверен -
-    @PutMapping
+
+    //проверен +
+    //http://localhost:8080/votes
+    /* body
+    {
+        "id": 100013,
+        "user": {
+            "id": 100001
+        },
+        "restaurant": {
+            "id": 100002
+        },VOTES
+        "date": "2020-08-30T00:00:00"
+    }
+     */
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update (Vote vote){
+    public void update (@RequestBody Vote vote){
         service.update(vote);
     }
-    //проверен -
+
+    //проверен +
+    //http://localhost:8080/votes/restaurant?restaurantId=100003
     @GetMapping(value = "/restaurant",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Vote> getByRestaurant(@RequestParam int restaurantId){
         return repository.getByRestaurant(restaurantId);
     }
-    //проверен -
-    @GetMapping(value = "/berween",produces = MediaType.APPLICATION_JSON_VALUE)
+
+    //проверен +
+    //http://localhost:8080/votes/between?startDate=2020-07-02&endDate=2020-07-02
+    @GetMapping(value = "/between",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Vote> getBetween(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  startDate,
                                  @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  endDate) {
         return service.getBetween(startDate, endDate);
     }
-
-
-
-
 }

@@ -1,5 +1,7 @@
 package ru.graduate.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,8 @@ import java.util.List;
 public class VoteController {
     static final String VOTE_URL = "/votes";
 
+    private Logger logger = LoggerFactory.getLogger(VoteController.class);
+
     private final VoteRepository repository;
     private final VoteService service;
 
@@ -32,8 +36,10 @@ public class VoteController {
     //http://localhost:8080/votes
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Vote> getAll(){
+        logger.info("getAll");
         return repository.findAll();
     }
+
 
     //проверен +
     //http://localhost:8080/votes?restaurantId=100002&date=2020-08-04&userId=100001
@@ -54,13 +60,16 @@ public class VoteController {
                 .path(VOTE_URL+"/{id}")
                 .buildAndExpand(created.getId())
                 .toUri();
+        logger.info("create(restaurantId,date,userId) {} {} {} ",restaurantId,date,userId);
         return ResponseEntity.created(responseUri).body(created);
     }
 
+    //admin
     //проверен +
     //http://localhost:8080/votes/100012
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public Vote get(@PathVariable int id){
+        logger.info("get(id) {} ",id);
         return service.get(id);
     }
 
@@ -68,14 +77,17 @@ public class VoteController {
     //http://localhost:8080/votes/user?userId=100000
     @GetMapping(value = "/user",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Vote> getByUser(@RequestParam int userId){
+        logger.info("getByUser(userId) {} ",userId);
         return service.getByUser(userId);
     }
 
+    //admin
     //проверен +
     //http://localhost:8080/votes/100012
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id){
+        logger.info("delete(id) {} ",id);
         service.delete(id);
     }
 
@@ -96,6 +108,7 @@ public class VoteController {
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update (@RequestBody Vote vote){
+        logger.info("update (vote) {} ",vote);
         service.update(vote);
     }
 
@@ -103,6 +116,7 @@ public class VoteController {
     //http://localhost:8080/votes/restaurant?restaurantId=100003
     @GetMapping(value = "/restaurant",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Vote> getByRestaurant(@RequestParam int restaurantId){
+        logger.info("getByRestaurant(restaurantId) {} ",restaurantId);
         return repository.getByRestaurant(restaurantId);
     }
 
@@ -111,6 +125,7 @@ public class VoteController {
     @GetMapping(value = "/between",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Vote> getBetween(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  startDate,
                                  @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  endDate) {
+        logger.info("getBetween(startDate, endDate) {} {} ",startDate, endDate);
         return service.getBetween(startDate, endDate);
     }
 }

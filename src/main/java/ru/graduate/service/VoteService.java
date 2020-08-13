@@ -31,7 +31,7 @@ public class VoteService {
         Vote vote = new Vote(userRepository.getOne(userId),restaurantRepository.getOne(restaurantId),TimeUtils.toBeginOfDay(date));
         return repository.save(vote);
     }
-
+    //admin only
     public Vote get(int id){
         return ValidationUtil.checkNotFoundWithId(repository.findById(id).orElse(null),id);
     }
@@ -40,18 +40,16 @@ public class VoteService {
         return repository.getByUser(userId);
     }
 
+    //admin only
     public void delete (int id){
         ValidationUtil.checkNotFoundWithId(repository.delete(id)!=0,id);
     }
 
+    //user: own votes only, to 11 am
     public void update (Vote vote){
         Assert.notNull(vote,"Vote must not be null");
         ValidationUtil.checkNotFoundWithId(repository.save(vote),vote.getId());
     }
-
-//    public List<Vote> getByRestaurant(int restaurantId){
-//        return repository.getByRestaurant(restaurantId);
-//    }
 
     public List<Vote> getBetween(LocalDate startDate, LocalDate endDate) {
         LocalDateTime startOfDay = TimeUtils.toBeginOfDay(startDate);

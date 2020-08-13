@@ -1,5 +1,7 @@
 package ru.graduate.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,8 @@ public class RestaurantController {
 
     static final String RESTAURANTS_URL = "/restaurants";
 
+    private final Logger logger = LoggerFactory.getLogger(RestaurantController.class);
+
     private final RestaurantService service;
 
     private final RestaurantRepository repository;
@@ -33,11 +37,13 @@ public class RestaurantController {
     //проверен+
     @GetMapping("/{id}")
     public Restaurant get(@PathVariable int id) {
+        logger.info("get(id) {} ",id);
         return service.get(id);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Restaurant> getAll(){
+        logger.info("getAll");
         return repository.findAll(Sort.by(Sort.Direction.DESC,"name"));
     }
 
@@ -49,6 +55,7 @@ public class RestaurantController {
                 .path(RESTAURANTS_URL+"/{id}")
                 .buildAndExpand(created.getId())
                 .toUri();
+        logger.info("create (restaurant) {} ",restaurant);
         return ResponseEntity.created(responseUri).body(created);
     }
 
@@ -56,18 +63,29 @@ public class RestaurantController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id){
+        logger.info("delete(id) {} ",id);
         service.delete(id);
     }
 
-    //проверен+
-    @PutMapping("/{id}")
+    //проверен +
+    //PUT http://localhost:8080/restaurants
+    //body
+    /*
+    {
+        "id": 100004,
+        "name": "Restaurant 333"
+    }
+     */
+    @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update (@PathVariable int id,@RequestBody Restaurant restaurant){
-        service.update(id,restaurant);
+    public void update (@RequestBody Restaurant restaurant){
+        logger.info("update (restaurant) {} ",restaurant);
+        service.update(restaurant);
     }
     //проверен +
     @GetMapping(value = "/name",produces = MediaType.APPLICATION_JSON_VALUE)
     public Restaurant getByName(@RequestParam String name){
+        logger.info("getByName(name) {} ",name);
         return service.getByName(name);
     }
 

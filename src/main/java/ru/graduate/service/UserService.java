@@ -1,19 +1,22 @@
 package ru.graduate.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import ru.graduate.LoggedUser;
 import ru.graduate.model.User;
 import ru.graduate.repository.UserRepository;
-
-import java.util.List;
 
 import static ru.graduate.utils.ValidationUtil.checkNotFoundWithId;
 import static ru.graduate.utils.ValidationUtil.checkNotFound;
 
-@Service
-public class UserService {
+@Service("userService")
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -27,9 +30,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User update(User user){
+    public User update(User user, int id){
         Assert.notNull(user,"user is null, error");
-        return checkNotFoundWithId(userRepository.save(user),user.getId());
+        return checkNotFoundWithId(userRepository.save(user),id);
     }
 
     public void delete(int id){
@@ -51,5 +54,14 @@ public class UserService {
 
     public User getAllWithRoles(int id){
         return checkNotFoundWithId(userRepository.getAllWithRoles(id),id);
+    }
+
+    @Override
+    public LoggedUser loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.getByEmail(email.toLowerCase());
+        if (user == null) {
+            throw new UsernameNotFoundException("User " + email + " is not found");
+        }
+        return new LoggedUser(user);
     }
 }

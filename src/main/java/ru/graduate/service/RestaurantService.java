@@ -34,7 +34,7 @@ public class RestaurantService {
         ValidationUtil.checkNotFoundWithId(repository.delete(id)!=0,id);
     }
 
-    public void update (int id, Restaurant restaurant){
+    public void update (Restaurant restaurant){
         Assert.notNull(restaurant,"restaurant must not be null");
         ValidationUtil.checkNotFoundWithId(repository.save(restaurant),restaurant.getId());
     }

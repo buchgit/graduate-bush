@@ -52,9 +52,9 @@ public class UserService implements UserDetailsService {
         return checkNotFound(userRepository.getByEmail(email),email);
     }
 
-    public User getAllWithRoles(int id){
-        return checkNotFoundWithId(userRepository.getAllWithRoles(id),id);
-    }
+//    public User getAllWithRoles(int id){
+//        return checkNotFoundWithId(userRepository.getAllWithRoles(id),id);
+//    }
 
     @Override
     public LoggedUser loadUserByUsername(String email) throws UsernameNotFoundException {

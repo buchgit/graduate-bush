@@ -44,15 +44,21 @@ public class MenuService {
         ValidationUtil.checkNotFoundWithId(repository.save(menu),menu.getId());
     }
 
-    public List<Menu> getByRestaurant(int restaurantId){
-        return repository.getByRestaurant(restaurantId);
-    }
-
-    public List<Menu> getBetween(LocalDate startDate, LocalDate endDate) {
+    public List<Menu> getAllFiltered(LocalDate startDate, LocalDate endDate, int restaurantId) {
         LocalDateTime startOfDay = TimeUtils.toBeginOfDay(startDate);
         LocalDateTime endOfDay = TimeUtils.toEndOfDay(endDate);
-        return repository.getBetween(startOfDay, endOfDay);
+        return repository.getAllFiltered(startOfDay, endOfDay, restaurantId);
     }
+
+//    public List<Menu> getByRestaurant(int restaurantId){
+//        return repository.getByRestaurant(restaurantId);
+//    }
+//
+//    public List<Menu> getBetween(LocalDate startDate, LocalDate endDate) {
+//        LocalDateTime startOfDay = TimeUtils.toBeginOfDay(startDate);
+//        LocalDateTime endOfDay = TimeUtils.toEndOfDay(endDate);
+//        return repository.getBetween(startOfDay, endOfDay);
+//    }
 
 
 

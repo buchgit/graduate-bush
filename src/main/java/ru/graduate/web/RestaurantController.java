@@ -7,14 +7,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.graduate.model.Restaurant;
 import ru.graduate.repository.RestaurantRepository;
 import ru.graduate.service.RestaurantService;
 
-import java.net.URI;
+import javax.validation.Valid;
 import java.util.List;
+
+import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
 
 @RestController
 @RequestMapping(RestaurantController.RESTAURANTS_URL)
@@ -34,12 +36,9 @@ public class RestaurantController {
         this.repository = repository;
     }
 
-    //проверен+
-    @GetMapping("/{id}")
-    public Restaurant get(@PathVariable int id) {
-        logger.info("get(id) {} ",id);
-        return service.get(id);
-    }
+    /*
+     *** General section ***
+     */
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Restaurant> getAll(){
@@ -47,27 +46,40 @@ public class RestaurantController {
         return repository.findAll(Sort.by(Sort.Direction.DESC,"name"));
     }
 
-    //проверен+
-    @PostMapping
-    public ResponseEntity<Restaurant> create (@RequestBody Restaurant restaurant){
-        Restaurant created = service.create(restaurant);
-        URI responseUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(RESTAURANTS_URL+"/{id}")
-                .buildAndExpand(created.getId())
-                .toUri();
-        logger.info("create (restaurant) {} ",restaurant);
-        return ResponseEntity.created(responseUri).body(created);
+    //проверен -
+    @GetMapping(value = "/name",produces = MediaType.APPLICATION_JSON_VALUE)
+    public Restaurant getByName(@RequestParam String name){
+        logger.info("getByName(name) {} ",name);
+        return service.getByName(name);
     }
 
-    //проверен+
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id){
-        logger.info("delete(id) {} ",id);
-        service.delete(id);
+    /*
+    *** Admin section ***
+     */
+
+    //проверен-
+    //admin
+    @GetMapping("/admin/{id}")
+    public Restaurant get(@PathVariable int id) {
+        logger.info("get(id) {} ",id);
+        return service.get(id);
     }
 
-    //проверен +
+    //проверен -
+    //admin
+    @PostMapping("/admin")
+    public ResponseEntity<String> create (@Valid @RequestBody Restaurant restaurant, BindingResult result){
+        if (result.hasErrors()){
+            return getStringResponseEntity(result, logger);
+        }else{
+            Restaurant created = service.create(restaurant);
+            logger.info("create(restaurant) {} ",created);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+    }
+
+    //проверен -
+    //admin
     //PUT http://localhost:8080/restaurants
     //body
     /*
@@ -76,17 +88,24 @@ public class RestaurantController {
         "name": "Restaurant 333"
     }
      */
-    @PutMapping
+    @PutMapping("/admin")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update (@RequestBody Restaurant restaurant){
-        logger.info("update (restaurant) {} ",restaurant);
-        service.update(restaurant);
-    }
-    //проверен +
-    @GetMapping(value = "/name",produces = MediaType.APPLICATION_JSON_VALUE)
-    public Restaurant getByName(@RequestParam String name){
-        logger.info("getByName(name) {} ",name);
-        return service.getByName(name);
+    public ResponseEntity<String> update(@Valid @RequestBody Restaurant restaurant, BindingResult result) {
+        if (result.hasErrors()) {
+            return getStringResponseEntity(result, logger);
+        } else {
+            service.update(restaurant);
+            logger.info("update (restaurant) {} ", restaurant);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
+    //проверен-
+    //admin
+    @DeleteMapping("/admin/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable int id){
+        logger.info("delete(id) {} ",id);
+        service.delete(id);
+    }
 }

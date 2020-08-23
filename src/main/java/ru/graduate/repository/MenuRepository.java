@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.graduate.model.Menu;
@@ -26,10 +27,15 @@ public interface MenuRepository extends JpaRepository <Menu,Integer>{
     @Query("select m FROM Menu m where m.id =:id order by m.date")
     List<Menu> get(@Param("id") int id);
 
-    @Query("select m from Menu m where m.restaurant.id =:restaurantId")
-    List<Menu> getByRestaurant(@Param("restaurantId") int restaurantId);
+    @Query("select m from Menu m where m.date >=:startDate and m.date<=:endDate and m.restaurant is null or m.restaurant=:restaurantId")
+    List<Menu> getAllFiltered(@Param("startDate") @NotNull LocalDateTime startDate,
+                              @Param("endDate") @NotNull LocalDateTime endDate,
+                              @Param("restaurantId") @Nullable int restaurantId);
 
-    @Query("select m from Menu m where m.date >=:startDate and m.date<=:endDate")
-    List<Menu> getBetween(@Param("startDate") @NotNull LocalDateTime startDate,
-                          @Param("endDate") @NotNull LocalDateTime endDate);
+//    @Query("select m from Menu m where m.restaurant.id =:restaurantId")
+//    List<Menu> getByRestaurant(@Param("restaurantId") int restaurantId);
+//
+//    @Query("select m from Menu m where m.date >=:startDate and m.date<=:endDate")
+//    List<Menu> getBetween(@Param("startDate") @NotNull LocalDateTime startDate,
+//                          @Param("endDate") @NotNull LocalDateTime endDate);
 }

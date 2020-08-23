@@ -1,5 +1,5 @@
 package ru.graduate;
 
-public interface HasEmail extends ru.graduate.HasId{
+public interface HasEmail extends HasId{
     String getEmail();
 }

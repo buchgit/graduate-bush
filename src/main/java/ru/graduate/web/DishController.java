@@ -8,15 +8,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.graduate.model.Dish;
 import ru.graduate.repository.DishRepository;
 import ru.graduate.service.DishService;
 
-import java.net.URI;
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
+
+import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
 
 @RestController
 @RequestMapping(DishController.DISH_URL)
@@ -36,42 +38,80 @@ public class DishController {
         this.repository = repository;
     }
 
-    //проверен+
-    @GetMapping("/{id}")
+    /*
+     *** General section ***
+     */
+
+//    //проверен+
+//    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+//    public List<Dish> getAll(){
+//        logger.info("getAll");
+//        return repository.findAll(Sort.by(Sort.Direction.DESC,"name"));
+//    }
+
+    //проверен -
+    //http://localhost:8080/dishes/between?startDate=2020-07-02&endDate=2020-07-02
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Dish> getBetween(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  startDate,
+                                 @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  endDate){
+        logger.info("getBetween(startDate,endDate) {} {} ",startDate,endDate);
+        return service.getBetween(startDate,endDate);
+    }
+
+    //проверен -
+    //http://localhost:8080/dishes/name?name=dish 9
+    @GetMapping(value = "/name",produces = MediaType.APPLICATION_JSON_VALUE)
+    public Dish getByName(@RequestParam String name){
+        logger.info("getByName(name) {} ",name);
+        return service.getByName(name);
+    }
+
+    //проверен -
+    @GetMapping(value = "/menu",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Dish> getByMenu(@RequestParam int id){
+        logger.info("getByMenu(id) {} ",id);
+        return repository.getByMenu(id);
+    }
+
+    //проверен -
+    /*
+    http://localhost:8080/dishes//restaurant?id=100003
+     */
+    @GetMapping(value = "/restaurant",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Dish> getByRestaurant(@RequestParam int id){
+        logger.info("getByRestaurant(id) {} ",id);
+        return repository.getByRestaurant(id);
+    }
+
+
+
+    /*
+     *** Admin section ***
+     */
+
+    //проверен -
+    @GetMapping("/admin/{id}")
     public Dish get(@PathVariable int id) {
         logger.info("get(id) {} ",id);
         return service.get(id);
     }
 
-    //проверен+
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Dish> getAll(){
-        logger.info("getAll");
-        return repository.findAll(Sort.by(Sort.Direction.DESC,"name"));
+    //проверен - но dish.menu в body прилетает как null
+    @PostMapping("/admin")
+    public ResponseEntity<String> create(@Valid @RequestBody Dish dish,
+                                       @RequestParam int menuId,
+                                       BindingResult result
+    ) {
+        if (result.hasErrors()){
+            return getStringResponseEntity(result, logger);
+        }else{
+            Dish created = service.create(dish,menuId);
+            logger.info("create(dish) {} ",created);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
     }
 
-    //проверен+ но dish.menu в body прилетает как null
-    @PostMapping
-    public ResponseEntity<Dish> create (@RequestBody Dish dish,
-                                        @RequestParam int menuId){
-        Dish created = service.create(dish,menuId);
-        URI responseUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(DISH_URL+"/{id}")
-                .buildAndExpand(created.getId())
-                .toUri();
-        logger.info("create (dish,menuId) {} {} ",dish,menuId);
-        return ResponseEntity.created(responseUri).body(created);
-    }
-
-    //проверен+
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id){
-        logger.info("delete(id) {} ",id);
-        service.delete(id);
-    }
-
-    //проверен
+    //проверен -
     /*
     {
         "id": 100023,
@@ -82,44 +122,23 @@ public class DishController {
         "price": 88.77
     }
      */
-    @PutMapping
+    @PutMapping("/admin")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update (@RequestBody Dish dish){
-        logger.info("update (dish) {} ",dish);
-        service.update(dish);
+    public ResponseEntity<String> update (@Valid @RequestBody Dish dish, BindingResult result){
+        if (result.hasErrors()){
+            return getStringResponseEntity(result, logger);
+        }else{
+            service.update(dish);
+            logger.info("update (dish) {} ",dish);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
-    //проверен +
-    //http://localhost:8080/dishes/name?name=dish 9
-    @GetMapping(value = "/name",produces = MediaType.APPLICATION_JSON_VALUE)
-    public Dish getByName(@RequestParam String name){
-        logger.info("getByName(name) {} ",name);
-        return service.getByName(name);
-    }
-
-    //проверен +
-    @GetMapping(value = "/menu",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Dish> getByMenu(@RequestParam int id){
-        logger.info("getByMenu(id) {} ",id);
-        return repository.getByMenu(id);
-    }
-
-    //проверен +
-    /*
-    http://localhost:8080/dishes//restaurant?id=100003
-     */
-    @GetMapping(value = "/restaurant",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Dish> getByRestaurant(@RequestParam int id){
-        logger.info("getByRestaurant(id) {} ",id);
-        return repository.getByRestaurant(id);
-    }
-
-    //проверен +
-    //http://localhost:8080/dishes/between?startDate=2020-07-02&endDate=2020-07-02
-    @GetMapping(value = "/between",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Dish> getBetween(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  startDate,
-                                 @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  endDate){
-        logger.info("getBetween(startDate,endDate) {} {} ",startDate,endDate);
-        return service.getBetween(startDate,endDate);
+    //проверен -
+    @DeleteMapping("/admin/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable int id){
+        logger.info("delete(id) {} ",id);
+        service.delete(id);
     }
 }

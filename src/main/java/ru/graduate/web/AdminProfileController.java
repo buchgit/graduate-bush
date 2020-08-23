@@ -6,15 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.config.annotation.web.configurers.UrlAuthorizationConfigurer;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.graduate.model.User;
 import ru.graduate.repository.UserRepository;
 import ru.graduate.service.UserService;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
 
 @RestController
-@RequestMapping(UserProfileController.REST_URL)
+@RequestMapping(AdminProfileController.REST_URL)
 public class AdminProfileController {
 
     static final String REST_URL = "/admin";
@@ -30,11 +39,29 @@ public class AdminProfileController {
         this.repository = repository;
     }
 
+    //проверено -
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> create(@Valid @RequestBody User user, BindingResult result) {
+        if (result.hasErrors()) {
+            return getStringResponseEntity(result, logger);
+        } else {
+            User createdUser = service.create(user);
+            logger.info("create(user) {} ", createdUser.getName());
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+    }
+
+    //проверено -
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody User user) {
-        logger.info("update(user) {} ",user);
-        service.update(user);
+    public ResponseEntity<String> update(@Valid @RequestBody User user,BindingResult result) {
+        if (result.hasErrors()){
+            return getStringResponseEntity(result, logger);
+        }else{
+            User updatedUser = service.update(user,user.getId());
+            logger.info("update(user) {} ",updatedUser.getName());
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
     //проверено -
@@ -49,9 +76,9 @@ public class AdminProfileController {
     //проверен -
     //http://localhost:8080/admin/100001
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public User getById(@PathVariable String id){
+    public User get(@PathVariable String id){
         int Id = Integer.parseInt(id);
-        logger.info("getById(id) {} ",id);
+        logger.info("get(id) {} ",id);
         return repository.findById(Id).orElse(null);
     }
 
@@ -63,12 +90,14 @@ public class AdminProfileController {
         return repository.findAll(Sort.by(Sort.Direction.DESC,"name","email"));
     }
 
-//
-//    public User getByEmail(String email){
-//        Assert.notNull(email,"email is null, error");
-//        return checkNotFound(userRepository.getByEmail(email),email);
-//    }
-//
+
+
+    //проверено -
+    @GetMapping("/email")
+    public User getByEmail(@RequestParam String email){
+        return service.getByEmail(email);
+    }
+
 //    public User getAllWithRoles(int id){
 //        return checkNotFoundWithId(userRepository.getAllWithRoles(id),id);
 //    }

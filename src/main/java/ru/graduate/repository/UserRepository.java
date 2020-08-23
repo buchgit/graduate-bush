@@ -18,10 +18,10 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Query("delete from User u where u.id=:id")
     int delete(@Param("id") int id);
 
-    User getByEmail(String email);//проверить как цепляет
+    User getByEmail(String email);
 
-    @EntityGraph(attributePaths = "roles")
-    @Query("select u from User u where u.id=?1")
-    User getAllWithRoles(int id);
+//    @EntityGraph(attributePaths = "roles")
+//    @Query("select u from User u where u.id=?1")
+//    User getAllWithRoles(int id);
 
 }

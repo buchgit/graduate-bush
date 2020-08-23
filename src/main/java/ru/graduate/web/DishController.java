@@ -52,10 +52,11 @@ public class DishController {
     //проверен -
     //http://localhost:8080/dishes/between?startDate=2020-07-02&endDate=2020-07-02
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Dish> getBetween(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  startDate,
-                                 @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  endDate){
-        logger.info("getBetween(startDate,endDate) {} {} ",startDate,endDate);
-        return service.getBetween(startDate,endDate);
+    public List<Dish> getBetweenByRestaurant(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                 @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+                                 @RequestParam(required = false) int restaurantId) {
+        logger.info("getBetween(startDate,endDate) {} {} {} ", startDate, endDate, restaurantId);
+        return service.getBetweenByRestaurant(startDate, endDate, restaurantId);
     }
 
     //проверен -
@@ -73,15 +74,17 @@ public class DishController {
         return repository.getByMenu(id);
     }
 
-    //проверен -
-    /*
-    http://localhost:8080/dishes//restaurant?id=100003
-     */
-    @GetMapping(value = "/restaurant",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Dish> getByRestaurant(@RequestParam int id){
-        logger.info("getByRestaurant(id) {} ",id);
-        return repository.getByRestaurant(id);
-    }
+//    //проверен -
+//    /*
+//    http://localhost:8080/dishes//restaurant?id=100003
+//     */
+//    @GetMapping(value = "/restaurant", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public List<Dish> getByRestaurant(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+//                                      @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+//                                      @RequestParam int id) {
+//        logger.info("getByRestaurant(startDate, endDate, id) {} {} {} ", startDate, endDate, id);
+//        return repository.getByRestaurant(startDate, endDate, id);
+//    }
 
 
 

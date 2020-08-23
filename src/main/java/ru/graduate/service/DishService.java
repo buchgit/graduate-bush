@@ -52,9 +52,9 @@ public class DishService {
         return repository.getByMenu(menuId);
     }
 
-    public List<Dish> getBetween(LocalDate startDate, LocalDate endDate) {
+    public List<Dish> getBetweenByRestaurant(LocalDate startDate, LocalDate endDate, int restaurantId) {
         LocalDateTime startOfDay = TimeUtils.toBeginOfDay(startDate);
         LocalDateTime endOfDay = TimeUtils.toEndOfDay(endDate);
-        return repository.getBetween(startOfDay, endOfDay);
+        return repository.getBetweenByRestaurant(startOfDay, endOfDay, restaurantId);
     }
 }

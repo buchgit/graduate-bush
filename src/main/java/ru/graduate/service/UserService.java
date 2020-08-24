@@ -5,8 +5,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 import ru.graduate.LoggedUser;
 import ru.graduate.model.User;
 import ru.graduate.repository.UserRepository;
@@ -19,20 +21,22 @@ import static ru.graduate.utils.ValidationUtil.checkNotFound;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User create(User user){
         Assert.notNull(user,"user is null, error");
-        return userRepository.save(user);
+        return prepareAndSave(user);
     }
 
     public User update(User user, int id){
         Assert.notNull(user,"user is null, error");
-        return checkNotFoundWithId(userRepository.save(user),id);
+        return checkNotFoundWithId(prepareAndSave(user),id);
     }
 
     public void delete(int id){
@@ -63,5 +67,16 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("User " + email + " is not found");
         }
         return new LoggedUser(user);
+    }
+
+    public static User prepareToSave(User user, PasswordEncoder passwordEncoder) {
+        String password = user.getPassword();
+        user.setPassword(StringUtils.hasText(password) ? passwordEncoder.encode(password) : password);
+        user.setEmail(user.getEmail().toLowerCase());
+        return user;
+    }
+
+    private User prepareAndSave(User user) {
+        return userRepository.save(prepareToSave(user, passwordEncoder));
     }
 }

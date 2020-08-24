@@ -7,18 +7,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.config.annotation.web.configurers.UrlAuthorizationConfigurer;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.graduate.model.User;
 import ru.graduate.repository.UserRepository;
 import ru.graduate.service.UserService;
-
 import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
 

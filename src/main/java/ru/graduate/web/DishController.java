@@ -24,7 +24,7 @@ import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
 @RequestMapping(DishController.DISH_URL)
 public class DishController {
 
-    static final String DISH_URL = "/dishes";
+    static final String DISH_URL = "/rest/dishes";
 
     private final Logger logger = LoggerFactory.getLogger(DishController.class);
 
@@ -49,25 +49,23 @@ public class DishController {
 //        return repository.findAll(Sort.by(Sort.Direction.DESC,"name"));
 //    }
 
-    //проверен -
-    //http://localhost:8080/dishes/between?startDate=2020-07-02&endDate=2020-07-02
+    //проверен +
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Dish> getBetweenByRestaurant(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                  @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-                                 @RequestParam(required = false) int restaurantId) {
+                                 @RequestParam(required = false) Integer restaurantId) {
         logger.info("getBetween(startDate,endDate) {} {} {} ", startDate, endDate, restaurantId);
         return service.getBetweenByRestaurant(startDate, endDate, restaurantId);
     }
 
-    //проверен -
-    //http://localhost:8080/dishes/name?name=dish 9
+    //проверен +
     @GetMapping(value = "/name",produces = MediaType.APPLICATION_JSON_VALUE)
     public Dish getByName(@RequestParam String name){
         logger.info("getByName(name) {} ",name);
         return service.getByName(name);
     }
 
-    //проверен -
+    //проверен +
     @GetMapping(value = "/menu",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Dish> getByMenu(@RequestParam int id){
         logger.info("getByMenu(id) {} ",id);
@@ -99,7 +97,7 @@ public class DishController {
         return service.get(id);
     }
 
-    //проверен - но dish.menu в body прилетает как null
+    //проверен -
     @PostMapping("/admin")
     public ResponseEntity<String> create(@Valid @RequestBody Dish dish,
                                        @RequestParam int menuId,

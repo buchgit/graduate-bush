@@ -40,7 +40,7 @@ Base URL: `localhost:8080/rest/user`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/|POST|Registration|curl -w "\t%{http_code}\n" -s http://localhost:8080/rest/user -X POST -H 'Content-Type: application/json; charset=UTF-8' -d '{"name":"user", "email":"user@mail.ru", "password":"userpassword"}'|201|
+|/registration|POST|Registration|curl -w "\t%{http_code}\n" -s http://localhost:8080/rest/user -X POST -H 'Content-Type: application/json; charset=UTF-8' -d '{"name":"user", "email":"user@mail.ru", "password":"userpassword"}'|201|
 |/{id}|GET|Get own profile|curl -w "\t%{http_code}\n" -s http://localhost:8080/rest/user --user newemail@ya.ru:newPassword|200|
 |/|PUT|Update own profile|curl -w "\t%{http_code}\n" -s http://localhost:8080/rest/user -X PUT -H 'Content-Type:application/json;charset=UTF-8' --user newemail@ya.ru:newPassword -d '{"name":"New userName", "email":"newemail@yandex.ru", "password":"otherPassword"}'|204|
 |/{id}|DELETE|Delete own profile|curl -w "\t%{http_code}\n" -s http://localhost:8080/rest/user -X DELETE --user newemail@yandex.ru:otherPassword|204|
@@ -102,7 +102,7 @@ Base URL: `localhost:8080/rest/admin`
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
 |/|POST|Create new user|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/users -X POST -H 'Content-Type: application/json; charset=UTF-8' --user admin@gmail.com:admin -d '{"name":"newName", "email":"newemail@gmail.com", "password":"newPassword"}'|201|
-|/{id}|PUT|Update user profile|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/users/100000 -X PUT -H 'Content-Type:application/json;charset=UTF-8' --user admin@gmail.com:admin -d '{"name":"Updated User name", "email":"newmail@yandex.ru", "password":"password"}'|204|
+|/{id}|PUT|Update user profile|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/users/100000 -X PUT -H 'Content-Type:application/json;charset=UTF-8' --user admin@gmail.com:admin -d '{"name":"Updated User name", "email":"newmail@yandex.ru", "password":"password"}'|200|
 |/{id}|DELETE|Delete user profile|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/users/100000 -X DELETE --user admin@gmail.com:admin|204|
 |/{id}|GET|Get user profile by ID|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/users/100000 --user admin@gmail.com:admin|200|
 |/|GET|Get all users|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/users --user admin@gmail.com:admin|200|

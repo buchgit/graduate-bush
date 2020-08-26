@@ -35,8 +35,8 @@ public class UserProfileController {
         this.repository = repository;
     }
 
-    //проверено -
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    //проверено +
+    @PostMapping(value = "/registration", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> create(@Valid @RequestBody User user, BindingResult result) {
         if (result.hasErrors()) {
             return getStringResponseEntity(result, logger);

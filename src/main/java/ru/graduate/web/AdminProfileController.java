@@ -21,7 +21,7 @@ import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
 @RequestMapping(AdminProfileController.REST_URL)
 public class AdminProfileController {
 
-    static final String REST_URL = "/admin";
+    static final String REST_URL = "/rest/admin";
 
     private final Logger logger = LoggerFactory.getLogger(AdminProfileController.class);
 
@@ -34,7 +34,7 @@ public class AdminProfileController {
         this.repository = repository;
     }
 
-    //проверено -
+    //проверено +
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> create(@Valid @RequestBody User user, BindingResult result) {
         if (result.hasErrors()) {
@@ -46,7 +46,7 @@ public class AdminProfileController {
         }
     }
 
-    //проверено -
+    //проверено +
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<String> update(@Valid @RequestBody User user,BindingResult result) {
@@ -59,8 +59,7 @@ public class AdminProfileController {
         }
     }
 
-    //проверено -
-    //http://localhost:8080/admin/100001
+    //проверено +
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
@@ -68,8 +67,7 @@ public class AdminProfileController {
         service.delete(id);
     }
 
-    //проверен -
-    //http://localhost:8080/admin/100001
+    //проверен +
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public User get(@PathVariable String id){
         int Id = Integer.parseInt(id);
@@ -77,27 +75,17 @@ public class AdminProfileController {
         return repository.findById(Id).orElse(null);
     }
 
-    //проверено -
-    //http://localhost:8080/admin/
+    //проверено +
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getAll(){
         logger.info("getAll");
         return repository.findAll(Sort.by(Sort.Direction.DESC,"name","email"));
     }
 
-
-
-    //проверено -
+    //проверено +
     @GetMapping("/email")
     public User getByEmail(@RequestParam String email){
         return service.getByEmail(email);
     }
-
-//    public User getAllWithRoles(int id){
-//        return checkNotFoundWithId(userRepository.getAllWithRoles(id),id);
-//    }
-
-
-
 }
 

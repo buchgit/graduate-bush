@@ -45,7 +45,7 @@ public class ValidationUtil {
     public static ResponseEntity<String> getStringResponseEntity(BindingResult result, Logger logger) {
         StringBuilder sb = new StringBuilder();
         result.getFieldErrors().stream().map(e -> sb.append(e.getField()).append(" ").append(e.getDefaultMessage()).append("<br>"));
-        logger.info("create(dish) errors: {} ", sb.toString());
+        logger.info("binding error: {} ", sb.toString());
         return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 

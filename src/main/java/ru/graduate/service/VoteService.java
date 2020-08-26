@@ -50,7 +50,7 @@ public class VoteService {
         ValidationUtil.checkNotFoundWithId(repository.delete(id)!=0,id);
     }
 
-    public List<Vote> getAllFiltered(LocalDate startDate, LocalDate endDate, int restaurantId, int userId){
+    public List<Vote> getAllFiltered(LocalDate startDate, LocalDate endDate, Integer restaurantId, Integer userId){
         LocalDateTime startOfDay = TimeUtils.toBeginOfDay(startDate);
         LocalDateTime endOfDay = TimeUtils.toEndOfDay(endDate);
         return repository.getAllFiltered(startOfDay, endOfDay, restaurantId, userId);

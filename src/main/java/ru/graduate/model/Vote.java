@@ -13,7 +13,6 @@ public class Vote extends AbstractBaseEntity{
     @ManyToOne
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonBackReference
     @NotNull
     private User user;
 

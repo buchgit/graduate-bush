@@ -36,7 +36,6 @@ public class User extends AbstractNamedEntity{
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date registered = new Date();
 
-    //@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role"}, name = "user_roles_unique_idx")})
@@ -46,7 +45,7 @@ public class User extends AbstractNamedEntity{
     private Set<Role> roles;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
-    @JsonManagedReference
+
     private List<Vote> votes;
 
     public User() {

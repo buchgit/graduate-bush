@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import ru.graduate.repository.VoteRepository;
 import ru.graduate.service.VoteService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
@@ -39,20 +41,25 @@ public class VoteController {
         this.service = service;
     }
 
-    //User***************************************************************************************************
-    //user:проверен -
-    //http://localhost:8080/votes?restaurantId=100002&date=2020-08-04&userId=100001
-    /* response
-    {
-        "id": 100029,
-        "user": null,
-        "restaurant": null,
-        "date": "2020-08-04T00:00:00"
-    }
+    /*
+     *** General section ***
      */
+
+    //проверен +
+    @GetMapping(value = "/user",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Vote> getAllFiltered(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  startDate,
+                                     @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  endDate,
+                                     @RequestParam(required = false) @Nullable Integer restaurantId,
+                                     @RequestParam(required = false) @Nullable Integer userId
+    ){
+        logger.info("getAllFiltered(...) {} {} {} ",startDate,endDate,restaurantId,userId);
+        return service.getAllFiltered(startDate,endDate,restaurantId,userId);
+    }
+
+    //user:проверен -
     @PostMapping
     public ResponseEntity<Vote> create (@RequestParam int restaurantId,
-                                        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  date,
+                                        @RequestParam @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  date,
                                         @AuthenticationPrincipal LoggedUser loggedUser){
         Vote created = service.create(restaurantId, date, loggedUser.getId());
         URI responseUri = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -98,60 +105,13 @@ public class VoteController {
         service.delete(loggedUser.getId());
     }
 
-    //user:проверен -
-    @GetMapping(value = "/user",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Vote> getAllFiltered(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  startDate,
-                                     @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  endDate,
-                                     @RequestParam(required = false) int restaurantId,
-                                     @RequestParam(required = false) int userId
-                                     ){
-        logger.info("getAllFiltered(...) {} {} {} ",startDate,endDate,restaurantId,userId);
-        return service.getAllFiltered(startDate,endDate,restaurantId,userId);
-    }
-
-//    //user:проверен -
-//    //http://localhost:8080/votes/user?userId=100000
-//    @GetMapping(value = "/user",produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<Vote> getAllOwn(@AuthenticationPrincipal LoggedUser loggedUser){
-//        logger.info("getByUser(userId) {} ",loggedUser.getId());
-//        return service.getByUser(loggedUser.getId());
-//    }
-
-//    //user://проверен -
-//    //http://localhost:8080/votes/restaurant?restaurantId=100003
-//    @GetMapping(value = "/restaurant",produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<Vote> getByRestaurant(@RequestParam int restaurantId){
-//        logger.info("getByRestaurant(restaurantId) {} ",restaurantId);
-//        return repository.getByRestaurant(restaurantId);
-//    }
-//
-//    //user://проверен -
-//    //http://localhost:8080/votes/between?startDate=2020-07-02&endDate=2020-07-02
-//    @GetMapping(value = "/between",produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<Vote> getBetween(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  startDate,
-//                                 @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  endDate) {
-//        logger.info("getBetween(startDate, endDate) {} {} ",startDate, endDate);
-//        return service.getBetween(startDate, endDate);
-//    }
-//    //проверен -
-//    //http://localhost:8080/votes/admin/100012
-//    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-//    public Vote get(@PathVariable int id){
-//        logger.info("get(id) {} ",id);
-//        return service.get(id);
-//    }
 
 
+    /*
+     *** Admin section ***
+     */
 
-
-
-
-    //Admin only*************************************************************************************************
-
-
-
-
-    //проверен -
+    //проверен +
     //http://localhost:8080/votes/admin/100012
     @DeleteMapping("/admin/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -159,15 +119,4 @@ public class VoteController {
         logger.info("delete(id) {} ",id);
         service.delete(id);
     }
-
-//    //проверен -
-//    @GetMapping(value = "/admin",produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<Vote> getAll(){
-//        logger.info("getAll");
-//        return repository.findAll();
-//    }
-
-
-
-
 }

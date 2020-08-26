@@ -40,14 +40,14 @@ public class RestaurantController {
      *** General section ***
      */
 
-    //проверен -
+    //проверен +
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Restaurant> getAll(){
         logger.info("getAll");
         return repository.findAll(Sort.by(Sort.Direction.DESC,"name"));
     }
 
-    //проверен -
+    //проверен +
     @GetMapping(value = "/name",produces = MediaType.APPLICATION_JSON_VALUE)
     public Restaurant getByName(@RequestParam String name){
         logger.info("getByName(name) {} ",name);
@@ -58,8 +58,7 @@ public class RestaurantController {
     *** Admin section ***
      */
 
-    //проверен-
-    //admin
+    //проверен +
     @GetMapping("/admin/{id}")
     public Restaurant get(@PathVariable int id) {
         logger.info("get(id) {} ",id);
@@ -67,7 +66,6 @@ public class RestaurantController {
     }
 
     //проверен -
-    //admin
     @PostMapping("/admin")
     public ResponseEntity<String> create (@Valid @RequestBody Restaurant restaurant, BindingResult result){
         if (result.hasErrors()){
@@ -78,17 +76,7 @@ public class RestaurantController {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
     }
-
-    //проверен -
-    //admin
-    //PUT http://localhost:8080/restaurants
-    //body
-    /*
-    {
-        "id": 100004,
-        "name": "Restaurant 333"
-    }
-     */
+    //проверен +
     @PutMapping("/admin")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<String> update(@Valid @RequestBody Restaurant restaurant, BindingResult result) {
@@ -100,9 +88,7 @@ public class RestaurantController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
-
-    //проверен-
-    //admin
+    //проверен +
     @DeleteMapping("/admin/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id){

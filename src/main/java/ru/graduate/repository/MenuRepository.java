@@ -27,10 +27,10 @@ public interface MenuRepository extends JpaRepository <Menu,Integer>{
     @Query("select m FROM Menu m where m.id =:id order by m.date")
     List<Menu> get(@Param("id") int id);
 
-    @Query("select m from Menu m where m.date >=:startDate and m.date<=:endDate and m.restaurant is null or m.restaurant=:restaurantId")
+    @Query("select m from Menu m where m.date >=:startDate and m.date<=:endDate and (:restaurantId is null or m.restaurant.id=:restaurantId)")
     List<Menu> getAllFiltered(@Param("startDate") @NotNull LocalDateTime startDate,
                               @Param("endDate") @NotNull LocalDateTime endDate,
-                              @Param("restaurantId") @Nullable int restaurantId);
+                              @Param("restaurantId") @Nullable Integer restaurantId);
 
 //    @Query("select m from Menu m where m.restaurant.id =:restaurantId")
 //    List<Menu> getByRestaurant(@Param("restaurantId") int restaurantId);

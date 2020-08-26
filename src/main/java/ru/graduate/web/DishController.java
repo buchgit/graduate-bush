@@ -24,7 +24,7 @@ import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
 @RequestMapping(DishController.DISH_URL)
 public class DishController {
 
-    static final String DISH_URL = "/rest/dishes";
+    static final String DISH_URL = "/dishes";
 
     private final Logger logger = LoggerFactory.getLogger(DishController.class);
 
@@ -97,7 +97,7 @@ public class DishController {
         return service.get(id);
     }
 
-    //проверен -
+    //проверен +
     @PostMapping("/admin")
     public ResponseEntity<String> create(@Valid @RequestBody Dish dish,
                                        @RequestParam int menuId,
@@ -112,10 +112,10 @@ public class DishController {
         }
     }
 
-    //проверен -
+    //проверен +
     /*
     {
-        "id": 100023,
+        "id": 100018,
         "name": "dish 666",
         "menu": {
             "id":100008
@@ -135,7 +135,7 @@ public class DishController {
         }
     }
 
-    //проверен -
+    //проверен +
     @DeleteMapping("/admin/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id){

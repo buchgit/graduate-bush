@@ -117,7 +117,7 @@ public class VoteController {
 //        return service.getByUser(loggedUser.getId());
 //    }
 
-//    //user:проверен +
+//    //user://проверен -
 //    //http://localhost:8080/votes/restaurant?restaurantId=100003
 //    @GetMapping(value = "/restaurant",produces = MediaType.APPLICATION_JSON_VALUE)
 //    public List<Vote> getByRestaurant(@RequestParam int restaurantId){
@@ -125,7 +125,7 @@ public class VoteController {
 //        return repository.getByRestaurant(restaurantId);
 //    }
 //
-//    //user:проверен +
+//    //user://проверен -
 //    //http://localhost:8080/votes/between?startDate=2020-07-02&endDate=2020-07-02
 //    @GetMapping(value = "/between",produces = MediaType.APPLICATION_JSON_VALUE)
 //    public List<Vote> getBetween(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  startDate,

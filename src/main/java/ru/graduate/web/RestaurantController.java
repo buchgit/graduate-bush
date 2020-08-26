@@ -40,6 +40,7 @@ public class RestaurantController {
      *** General section ***
      */
 
+    //проверен -
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Restaurant> getAll(){
         logger.info("getAll");

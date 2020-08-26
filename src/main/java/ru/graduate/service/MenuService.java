@@ -44,7 +44,7 @@ public class MenuService {
         ValidationUtil.checkNotFoundWithId(repository.save(menu),menu.getId());
     }
 
-    public List<Menu> getAllFiltered(LocalDate startDate, LocalDate endDate, int restaurantId) {
+    public List<Menu> getAllFiltered(LocalDate startDate, LocalDate endDate, Integer restaurantId) {
         LocalDateTime startOfDay = TimeUtils.toBeginOfDay(startDate);
         LocalDateTime endOfDay = TimeUtils.toEndOfDay(endDate);
         return repository.getAllFiltered(startOfDay, endOfDay, restaurantId);

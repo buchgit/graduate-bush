@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -45,21 +46,12 @@ public class MenuController {
      *** General section ***
      */
 
-//    //проверен -
-//    //http://localhost:8080/
-//    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<Menu> getAll(){
-//        logger.info("getAll");
-//        return repository.findAll(Sort.by(Sort.Direction.DESC,"date"));
-//    }
-
-    //проверен -
-    //http://localhost:8080/menus?startDate=2020-07-02&endDate=2020-07-02&restaurantId=100003
+    //проверен +
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Menu> getAllFiltered(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                      @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-                                     @RequestParam(required = false) int restaurantId) {
-        logger.info("getBetween(startDate,endDate) {} {} ", startDate, endDate);
+                                     @RequestParam(required = false) @Nullable Integer restaurantId) {
+        logger.info("getBetween(startDate,endDate) {} {} {}", startDate, endDate, restaurantId);
         return service.getAllFiltered(startDate, endDate, restaurantId);
     }
 
@@ -67,19 +59,14 @@ public class MenuController {
      *** Admin section ***
      */
 
-    //проверен -
-    //http://localhost:8080/menus/admin/100008
+    //проверен +
     @GetMapping("/admin/{id}")
     public Menu get(@PathVariable int id) {
         logger.info("get(id) {} ",id);
         return service.get(id);
     }
-
-    //проверен-
-    //http://localhost:8080/menus/admin?restaurantId=100002&date=2020-07-06
+    //проверен +
     @PostMapping("/admin")
-//    public ResponseEntity<Menu> create (@RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-//                                        @RequestParam int restaurantId){
     public ResponseEntity<Menu> create (@RequestParam(required = true) @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                         @RequestParam int restaurantId){
         Menu created = service.create(date,restaurantId);
@@ -90,17 +77,7 @@ public class MenuController {
         logger.info("create (date,restaurantId {} {} ",date,restaurantId);
         return ResponseEntity.created(responseUri).body(created);
     }
-
-    //проверен -
-    /*
-    {
-        "id": 100010,
-        "date": "2020-08-11T00:00:00",
-        "restaurant": {
-            "id": 100003
-        }
-    }
-     */
+    //проверен +
     @PutMapping("/admin")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<String> update (@Valid @RequestBody Menu menu, BindingResult result){
@@ -113,31 +90,11 @@ public class MenuController {
         }
     }
 
-    //проверен -
-    //http://localhost:8080/menus/100007
+    //проверен +
     @DeleteMapping("/admin/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id){
         logger.info("delete(id {} ",id);
         service.delete(id);
     }
-
-
-
-//    //проверен +
-//    //http://localhost:8080/menus/restaurant/?id=100003
-//    @GetMapping(value = "/restaurant",produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<Menu> getByRestaurant(@RequestParam int id){
-//        logger.info("getByRestaurant(id) {} ",id);
-//        return repository.getByRestaurant(id);
-//    }
-//
-//    //проверен +
-//    //http://localhost:8080/menus/between?startDate=2020-07-02&endDate=2020-07-02
-//    @GetMapping(value = "/between",produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<Menu> getBetween(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-//                                 @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  endDate){
-//        logger.info("getBetween(startDate,endDate) {} {} ",startDate,endDate);
-//        return service.getBetween(startDate,endDate);
-//    }
 }

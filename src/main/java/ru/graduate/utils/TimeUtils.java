@@ -5,16 +5,14 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class TimeUtils {
+
+    private static final LocalDateTime MIN_DATE = LocalDateTime.of(1, 1, 1, 0, 0);
+    private static final LocalDateTime MAX_DATE = LocalDateTime.of(3000, 1, 1, 0, 0);
+
     public static LocalDateTime toBeginOfDay(LocalDate ld){
-        if (ld==null){
-            ld = LocalDate.now();
-        }
-        return  LocalDateTime.of(ld, LocalTime.MIN);
+        return ld==null?MIN_DATE:LocalDateTime.of(ld, LocalTime.MIN);
     }
     public static LocalDateTime toEndOfDay(LocalDate ld){
-        if (ld==null){
-            ld = LocalDate.now();
-        }
-        return  LocalDateTime.of(ld, LocalTime.MAX);
+        return ld==null?MAX_DATE:LocalDateTime.of(ld, LocalTime.MAX);
     }
 }

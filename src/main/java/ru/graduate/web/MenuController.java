@@ -3,7 +3,6 @@ package ru.graduate.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,7 +11,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.graduate.model.Dish;
 import ru.graduate.model.Menu;
 import ru.graduate.repository.MenuRepository;
 import ru.graduate.service.MenuService;
@@ -34,19 +32,15 @@ public class MenuController {
 
     private final MenuService service;
 
-    private final MenuRepository repository;
-
     @Autowired
     public MenuController(MenuService service, MenuRepository repository) {
         this.service = service;
-        this.repository = repository;
     }
 
     /*
      *** General section ***
      */
 
-    //проверен +
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Menu> getAllFiltered(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                      @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
@@ -59,42 +53,40 @@ public class MenuController {
      *** Admin section ***
      */
 
-    //проверен +
     @GetMapping("/admin/{id}")
     public Menu get(@PathVariable int id) {
-        logger.info("get(id) {} ",id);
+        logger.info("get(id) {} ", id);
         return service.get(id);
     }
-    //проверен +
+
     @PostMapping("/admin")
-    public ResponseEntity<Menu> create (@RequestParam(required = true) @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                                        @RequestParam int restaurantId){
-        Menu created = service.create(date,restaurantId);
+    public ResponseEntity<Menu> create(@RequestParam(required = true) @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                       @RequestParam int restaurantId) {
+        Menu created = service.create(date, restaurantId);
         URI responseUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(MENU_URL+"/{id}")
+                .path(MENU_URL + "/{id}")
                 .buildAndExpand(created.getId())
                 .toUri();
-        logger.info("create (date,restaurantId {} {} ",date,restaurantId);
+        logger.info("create (date,restaurantId {} {} ", date, restaurantId);
         return ResponseEntity.created(responseUri).body(created);
     }
-    //проверен +
+
     @PutMapping("/admin")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<String> update (@Valid @RequestBody Menu menu, BindingResult result){
-        if (result.hasErrors()){
+    public ResponseEntity<String> update(@Valid @RequestBody Menu menu, BindingResult result) {
+        if (result.hasErrors()) {
             return getStringResponseEntity(result, logger);
-        }else{
+        } else {
             service.update(menu);
-            logger.info("update (menu) {} ",menu);
+            logger.info("update (menu) {} ", menu);
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 
-    //проверен +
     @DeleteMapping("/admin/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id){
-        logger.info("delete(id {} ",id);
+    public void delete(@PathVariable int id) {
+        logger.info("delete(id {} ", id);
         service.delete(id);
     }
 }

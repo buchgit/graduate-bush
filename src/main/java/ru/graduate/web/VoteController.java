@@ -32,12 +32,10 @@ public class VoteController {
 
     private Logger logger = LoggerFactory.getLogger(VoteController.class);
 
-    private final VoteRepository repository;
     private final VoteService service;
 
     @Autowired
     public VoteController(VoteRepository repository, VoteService service) {
-        this.repository = repository;
         this.service = service;
     }
 
@@ -45,7 +43,6 @@ public class VoteController {
      *** General section ***
      */
 
-    //проверен +
     @GetMapping(value = "/user",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Vote> getAllFiltered(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  startDate,
                                      @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  endDate,
@@ -56,7 +53,6 @@ public class VoteController {
         return service.getAllFiltered(startDate,endDate,restaurantId,userId);
     }
 
-    //user:проверен -
     @PostMapping
     public ResponseEntity<Vote> create (@RequestParam int restaurantId,
                                         @RequestParam @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  date,
@@ -70,20 +66,6 @@ public class VoteController {
         return ResponseEntity.created(responseUri).body(created);
     }
 
-    //user:проверен -
-    //http://localhost:8080/votes
-    /* body
-    {
-        "id": 100013,
-        "user": {
-            "id": 100001
-        },
-        "restaurant": {
-            "id": 100002
-        },VOTES
-        "date": "2020-08-30T00:00:00"
-    }
-     */
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<String> update (@Valid @RequestBody Vote vote, BindingResult result , @AuthenticationPrincipal LoggedUser loggedUser){
@@ -96,8 +78,6 @@ public class VoteController {
         }
     }
 
-    //проверен -
-    //http://localhost:8080/votes/admin/100012
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@AuthenticationPrincipal LoggedUser loggedUser){
@@ -105,14 +85,10 @@ public class VoteController {
         service.delete(loggedUser.getId());
     }
 
-
-
     /*
      *** Admin section ***
      */
 
-    //проверен +
-    //http://localhost:8080/votes/admin/100012
     @DeleteMapping("/admin/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id){

@@ -22,7 +22,7 @@ import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
 @RequestMapping(UserProfileController.REST_URL)
 public class UserProfileController {
 
-    static final String REST_URL = "/user";
+    static final String REST_URL = "rest/user";
 
     private final Logger logger = LoggerFactory.getLogger(UserProfileController.class);
 
@@ -35,7 +35,6 @@ public class UserProfileController {
         this.repository = repository;
     }
 
-    //проверено +
     @PostMapping(value = "/registration", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> create(@Valid @RequestBody User user, BindingResult result) {
         if (result.hasErrors()) {
@@ -47,34 +46,28 @@ public class UserProfileController {
         }
     }
 
-    //проверено -
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<String> update(@Valid @RequestBody User user, @AuthenticationPrincipal LoggedUser loggedUser,BindingResult result) {
-        if (result.hasErrors()){
+    public ResponseEntity<String> update(@Valid @RequestBody User user, @AuthenticationPrincipal LoggedUser loggedUser, BindingResult result) {
+        if (result.hasErrors()) {
             return getStringResponseEntity(result, logger);
-        }else{
+        } else {
             User updatedUser = service.update(user, loggedUser.getId());
-            logger.info("update(user) {} ",updatedUser.getName());
+            logger.info("update(user) {} ", updatedUser.getName());
             return new ResponseEntity<>(HttpStatus.OK);
         }
-     }
+    }
 
-    //проверено -
-    //http://localhost:8080/user/100001
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@AuthenticationPrincipal LoggedUser loggedUser) {
-        logger.info("delete(id) {} ",loggedUser.getUsername());
+        logger.info("delete(id) {} ", loggedUser.getUsername());
         service.delete(loggedUser.getId());
     }
 
-    //проверен -
-    //http://localhost:8080/user/
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public User get(@AuthenticationPrincipal LoggedUser user){
-        logger.info("get() {} ",user.getUsername());
+    public User get(@AuthenticationPrincipal LoggedUser user) {
+        logger.info("get() {} ", user.getUsername());
         return repository.findById(user.getId()).orElse(null);
     }
-
 }

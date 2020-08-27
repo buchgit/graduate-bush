@@ -17,6 +17,7 @@ import static ru.graduate.utils.ValidationUtil.checkNotFoundWithId;
 import static ru.graduate.utils.ValidationUtil.checkNotFound;
 
 @Service("userService")
+//@Service
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserService implements UserDetailsService {
 

@@ -24,7 +24,7 @@ public class User extends AbstractNamedEntity{
 
     @Column(name = "password")
     @NotBlank
-    @Size(min = 5, max = 100)
+    @Size(min = 4, max = 100)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 

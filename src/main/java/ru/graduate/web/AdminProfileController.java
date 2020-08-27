@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.graduate.model.User;
 import ru.graduate.repository.UserRepository;
 import ru.graduate.service.UserService;
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -34,7 +35,6 @@ public class AdminProfileController {
         this.repository = repository;
     }
 
-    //проверено +
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> create(@Valid @RequestBody User user, BindingResult result) {
         if (result.hasErrors()) {
@@ -46,45 +46,40 @@ public class AdminProfileController {
         }
     }
 
-    //проверено +
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<String> update(@Valid @RequestBody User user,BindingResult result) {
-        if (result.hasErrors()){
+    public ResponseEntity<String> update(@Valid @RequestBody User user, BindingResult result) {
+        if (result.hasErrors()) {
             return getStringResponseEntity(result, logger);
-        }else{
-            User updatedUser = service.update(user,user.getId());
-            logger.info("update(user) {} ",updatedUser.getName());
+        } else {
+            User updatedUser = service.update(user, user.getId());
+            logger.info("update(user) {} ", updatedUser.getName());
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 
-    //проверено +
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
-        logger.info("delete(id) {} ",id);
+        logger.info("delete(id) {} ", id);
         service.delete(id);
     }
 
-    //проверен +
-    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public User get(@PathVariable String id){
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public User get(@PathVariable String id) {
         int Id = Integer.parseInt(id);
-        logger.info("get(id) {} ",id);
+        logger.info("get(id) {} ", id);
         return repository.findById(Id).orElse(null);
     }
 
-    //проверено +
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<User> getAll(){
+    public List<User> getAll() {
         logger.info("getAll");
-        return repository.findAll(Sort.by(Sort.Direction.DESC,"name","email"));
+        return repository.findAll(Sort.by(Sort.Direction.DESC, "name", "email"));
     }
 
-    //проверено +
     @GetMapping("/email")
-    public User getByEmail(@RequestParam String email){
+    public User getByEmail(@RequestParam String email) {
         return service.getByEmail(email);
     }
 }

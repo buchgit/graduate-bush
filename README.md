@@ -101,10 +101,10 @@ Base URL: `localhost:8080/rest/admin`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/|POST|Create new user|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/users -X POST -H 'Content-Type: application/json; charset=UTF-8' --user admin@gmail.com:admin -d '{"name":"newName", "email":"newemail@gmail.com", "password":"newPassword"}'|201|
+|/|POST|Create new user|curl -s -X POST -d '{"name":"Admin1", "email":"admin1@gmail.com", "password":"admin1"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/admin --user admin@gmail.com:admin|201|
 |/{id}|PUT|Update user profile|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/users/100000 -X PUT -H 'Content-Type:application/json;charset=UTF-8' --user admin@gmail.com:admin -d '{"name":"Updated User name", "email":"newmail@yandex.ru", "password":"password"}'|200|
 |/{id}|DELETE|Delete user profile|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/users/100000 -X DELETE --user admin@gmail.com:admin|204|
-|/{id}|GET|Get user profile by ID|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/users/100000 --user admin@gmail.com:admin|200|
+|/{id}|GET|Get user profile by ID|curl -s http://localhost:8080/rest/admin/100000 --user admin@gmail.com:admin|200|
 |/|GET|Get all users|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/users --user admin@gmail.com:admin|200|
 |/?email={email}|GET|Get user by email|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/users/by?email=admin@gmail.com --user admin@gmail.com:admin|200|
 

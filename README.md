@@ -44,7 +44,7 @@ Base URL: `localhost:8080/rest/user`
 |---|:---:|---|---|:---:|
 |/registration|POST|Registration|[look note](#note)|201|
 |/{id}|GET|Get own profile|curl -s http://localhost:8080/rest/user --user user@gmail.com:user|200|
-|/|PUT|Update own profile|[look note](#note)'|204|
+|/|PUT|Update own profile|[look note](#note)|204|
 |/{id}|DELETE|Delete own profile|curl -s -X DELETE http://localhost:8080/rest/user/100000 --user user@gmail.com:user|204|
 
 <sub>[to table of content](#content)</sub>
@@ -56,10 +56,10 @@ Base URL: `localhost:8080/rest`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/votes?startDate=?endDate=?restaurantId=?userId=|GET|Get all votes filtered by date, restaurants, and users (each parameter can be null)|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/votes --user user@yandex.ru:password|200|
-|/votes?restaurantId=?date=/|POST|To vote|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/votes/restaurant/100003 -X POST --user admin@gmail.com:admin|201|
-|/votes/|PUT|Update own vote|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/votes/restaurant/100003 -X PUT --user user@yandex.ru:password|200|
-|/votes|DELETE|Delete own vote|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/votes -X DELETE --user user@yandex.ru:password|422|
+|/votes?startDate=?endDate=?restaurantId=?userId=|GET|Get all votes filtered by date, restaurants, and users (each parameter can be null)|[look note](#note)|200|
+|/votes?restaurantId=?date=/|POST|To vote|[look note](#note)|201|
+|/votes/|PUT|Update own vote|[look note](#note)|200|
+|/votes|DELETE|Delete own vote|[look note](#note)|422|
 
 <sub>[to table of content](#content)</sub>
 
@@ -68,8 +68,8 @@ Base URL: `localhost:8080/rest/restaurants`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/|GET|Get restaurant list|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/restaurants --user user@yandex.ru:password|200|
-|/name?name=|GET|Get restaurant by name|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/restaurants --user user@yandex.ru:password|200|
+|/|GET|Get restaurant list|[look note](#note)|200|
+|/name?name=|GET|Get restaurant by name|[look note](#note)|200|
 
 <sub>[to table of content](#content)</sub>
 
@@ -78,7 +78,7 @@ Base URL: `localhost:8080/rest/menus`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/?startDate=...&endDate=...&restaurantId=...|GET|Get filtered menu list (each param can be null)|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/restaurants --user user@yandex.ru:password|200|
+|/?startDate=...&endDate=...&restaurantId=...|GET|Get filtered menu list (each param can be null)|[look note](#note)|200|
 
 <sub>[to table of content](#content)</sub>
 
@@ -91,7 +91,6 @@ Base URL: `localhost:8080/rest/dishes`
 |/?startDate=2020-07-02&endDate=2020-07-03|GET|Get all dishes filtered by date and not filtered by restaurants|curl 'http://localhost:8080/dishes/?startDate=2020-07-02&endDate=2020-07-03'|200|
 |/name?name=dish 1|GET|Get dish by name|curl 'http://localhost:8080/dishes/name?name=dish 1'|200|
 |/menu?id=100005|GET|Get dish by menu|curl 'http://localhost:8080/dishes/menu?id=100005'|200|
-|/restaurant?id=...|GET|Get dish by restaurant|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/restaurants --user user@yandex.ru:password|200|
 
 <sub>[to table of content](#content)</sub>
 
@@ -104,12 +103,12 @@ Base URL: `localhost:8080/rest/admin`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/|POST|Create new user|curl -s -X POST -d '{"name":"Admin1", "email":"admin1@gmail.com", "password":"admin1"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/admin --user admin@gmail.com:admin|201|
-|/{id}|PUT|Update user profile|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/users/100000 -X PUT -H 'Content-Type:application/json;charset=UTF-8' --user admin@gmail.com:admin -d '{"name":"Updated User name", "email":"newmail@yandex.ru", "password":"password"}'|200|
-|/{id}|DELETE|Delete user profile|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/users/100000 -X DELETE --user admin@gmail.com:admin|204|
+|/|POST|Create new user|[look note](#note)|201|
+|/{id}|PUT|Update user profile|[look note](#note)|200|
+|/{id}|DELETE|Delete user profile|[look note](#note)|204|
 |/{id}|GET|Get user profile by ID|curl -s http://localhost:8080/rest/admin/100000 --user admin@gmail.com:admin|200|
-|/|GET|Get all users|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/users --user admin@gmail.com:admin|200|
-|/?email={email}|GET|Get user by email|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/users/by?email=admin@gmail.com --user admin@gmail.com:admin|200|
+|/|GET|Get all users|[look note](#note)|200|
+|/?email={email}|GET|Get user by email|[look note](#note)|200|
 
 <sub>[to table of content](#content)</sub>
 
@@ -118,7 +117,7 @@ Base URL: `localhost:8080/rest/admin`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/votes/{id}|DELETE|Delete any vote|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/votes -X DELETE --user user@yandex.ru:password|422|
+|/votes/{id}|DELETE|Delete any vote|[look note](#note)|422|
 
 <sub>[to table of content](#content)</sub>
 
@@ -127,10 +126,10 @@ Base URL: `localhost:8080/rest/restaurants/admin`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/{id}|GET|Get restaurant by id|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/restaurants --user user@yandex.ru:password|200|
-|/|POST|Add new restaurant|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/restaurants -X POST -H 'Content-Type: application/json; charset=UTF-8' --user admin@gmail.com:admin -d '{"name":"newRestaurant"}'|201|
-|/|PUT|Update restaurant|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/restaurants/100002 -X PUT -H 'Content-Type:application/json;charset=UTF-8' --user admin@gmail.com:admin -d '{"name":"New restaurant name"}'|204|
-|/{id}|DELETE|Delete restaurant by ID|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/restaurants/100002 -X DELETE --user admin@gmail.com:admin|204|
+|/{id}|GET|Get restaurant by id|[look note](#note)|200|
+|/|POST|Add new restaurant|[look note](#note)|201|
+|/|PUT|Update restaurant|[look note](#note)|204|
+|/{id}|DELETE|Delete restaurant by ID|[look note](#note)|204|
 
 <sub>[to table of content](#content)</sub>
 
@@ -139,10 +138,10 @@ Base URL: `localhost:8080/rest/menus/admin`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/{id}|GET|Get menu by id|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/restaurants --user user@yandex.ru:password|200|
-|/?date=...&restaurantId=...|POST|Add new menu of any restaurant|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/restaurants -X POST -H 'Content-Type: application/json; charset=UTF-8' --user admin@gmail.com:admin -d '{"name":"newRes
-|/|PUT|Update menu|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/restaurants/100002 -X PUT -H 'Content-Type:application/json;charset=UTF-8' --user admin@gmail.com:admin -d '{"name":"New restaurant name"}'|204|
-|/{id}|DELETE|Delete menu by ID|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/restaurants/100002 -X DELETE --user admin@gmail.com:admin|204|
+|/{id}|GET|Get menu by id|[look note](#note)|200|
+|/?date=...&restaurantId=...|POST|Add new menu of any restaurant|[look note](#note)|201|
+|/|PUT|Update menu||204|
+|/{id}|DELETE|Delete menu by ID|204|
 
 <sub>[to table of content](#content)</sub>
 
@@ -152,9 +151,9 @@ Base URL: `localhost:8080/rest/dishes/admin`
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
 |/{id}|GET|Get dishes by id|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/restaurants --user user@yandex.ru:password|200|
-|/?menuId=...|POST|Add new dish of any menu|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/restaurants -X POST -H 'Content-Type: application/json; charset=UTF-8' --user admin@gmail.com:admin -d '{"name":"newRes
-|/|PUT|Update dish|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/restaurants/100002 -X PUT -H 'Content-Type:application/json;charset=UTF-8' --user admin@gmail.com:admin -d '{"name":"New restaurant name"}'|204|
-|/{id}|DELETE|Delete dish by ID|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/admin/restaurants/100002 -X DELETE --user admin@gmail.com:admin|204|
+|/?menuId=...|POST|Add new dish of any menu|201|
+|/|PUT|Update dish|[look note](#note)|204|
+|/{id}|DELETE|Delete dish by ID|[look note](#note)|204|
 
 <sub>[to table of content](#content)</sub>
 

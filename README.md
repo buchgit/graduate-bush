@@ -85,10 +85,10 @@ Base URL: `localhost:8080/rest/dishes`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/?startDate=...&endDate=...&restaurantId=...|GET|Get all dishes filtered by date and any restaurant|curl 'http://localhost:8080/rest/dishes/?startDate=2020-07-02&endDate=2020-07-03&restaurantId=100003'|200|
-|/?startDate=...&endDate=...|GET|Get all dishes filtered by date and not filtered by restaurants|curl 'http://localhost:8080/rest/dishes/?startDate=2020-07-02&endDate=2020-07-03'|200|
-|/name?name=...|GET|Get dish by name|curl 'http://localhost:8080/rest/dishes/name?name=dish 1'|200|
-|/menu?id=...|GET|Get dish by menu|curl 'http://localhost:8080/rest/dishes/menu?id=100005'|200|
+|/?startDate=...&endDate=...&restaurantId=...|GET|Get all dishes filtered by date and any restaurant|[look note](#note)|200|
+|/?startDate=...&endDate=...|GET|Get all dishes filtered by date and not filtered by restaurants|[look note](#note)|200|
+|/name?name=...|GET|Get dish by name|[look note](#note)|200|
+|/menu?id=...|GET|Get dish by menu|curl -s http://localhost:8080/rest/dishes/menu?id=100005 --user user@gmail.com:user|200|
 
 <sub>[to table of content](#content)</sub>
 

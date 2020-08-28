@@ -50,16 +50,16 @@ Base URL: `localhost:8080/rest/user`
 <sub>[to table of content](#content)</sub>
 
 #### User Vote:
-Base URL: `localhost:8080/rest`
+Base URL: `localhost:8080/rest/votes`
 
 **NOTE:** *by default decision time is 11:00 AM*
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/votes?startDate=...?endDate=...?restaurantId=...?userId=|GET|Get all votes filtered by date, restaurants, and users (each parameter can be null)|[look note](#note)|200|
-|/votes?restaurantId=...?date=.../|POST|To vote|[look note](#note)|201|
-|/votes/|PUT|Update own vote|[look note](#note)|200|
-|/votes|DELETE|Delete own vote|[look note](#note)|422|
+|?startDate=...?endDate=...?restaurantId=...?userId=|GET|Get all votes filtered by date, restaurants, and users (each parameter can be null)|[look note](#note)|200|
+|?restaurantId=...?date=.../|POST|To vote|[look note](#note)|201|
+|/|PUT|Update own vote|[look note](#note)|200|
+|/|DELETE|Delete own vote|[look note](#note)|422|
 
 <sub>[to table of content](#content)</sub>
 
@@ -117,7 +117,7 @@ Base URL: `localhost:8080/rest/votes/admin`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/votes/{id}|DELETE|Delete any vote|[look note](#note)|422|
+|/{id}|DELETE|Delete any vote|[look note](#note)|422|
 
 <sub>[to table of content](#content)</sub>
 

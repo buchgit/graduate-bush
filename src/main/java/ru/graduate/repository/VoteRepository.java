@@ -20,8 +20,8 @@ public interface VoteRepository extends JpaRepository<Vote,Integer> {
 
     @Transactional
     @Modifying
-    @Query("delete from Vote v where v.id=:id")
-    int delete(@Param("id") int id);
+    @Query("delete from Vote v where v.id=:id and (:userId is null or v.user.id=:userId)")
+    int delete(@Param("id") int id,@Param("userId") Integer userId);
 
     @Transactional
     @Modifying

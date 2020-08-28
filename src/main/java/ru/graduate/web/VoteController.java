@@ -28,7 +28,7 @@ import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
 @RestController
 @RequestMapping(VoteController.VOTE_URL)
 public class VoteController {
-    static final String VOTE_URL = "/votes";
+    static final String VOTE_URL = "/rest/votes";
 
     private Logger logger = LoggerFactory.getLogger(VoteController.class);
 
@@ -78,11 +78,11 @@ public class VoteController {
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@AuthenticationPrincipal LoggedUser loggedUser){
+    public void delete(@PathVariable int id, @AuthenticationPrincipal LoggedUser loggedUser){
         logger.info("delete(id) {} ",loggedUser.getId());
-        service.delete(loggedUser.getId());
+        service.delete(id, loggedUser.getId());
     }
 
     /*
@@ -93,6 +93,6 @@ public class VoteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id){
         logger.info("delete(id) {} ",id);
-        service.delete(id);
+        service.delete(id,null);
     }
 }

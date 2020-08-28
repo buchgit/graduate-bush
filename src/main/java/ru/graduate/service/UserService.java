@@ -17,7 +17,6 @@ import static ru.graduate.utils.ValidationUtil.checkNotFoundWithId;
 import static ru.graduate.utils.ValidationUtil.checkNotFound;
 
 @Service("userService")
-//@Service
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserService implements UserDetailsService {
 
@@ -47,10 +46,6 @@ public class UserService implements UserDetailsService {
     public User getById(int id){
         return userRepository.findById(id).orElse(null);
     }
-// из контроллера напрямую из репозитория
-//    public List<User> getAll(){
-//        return userRepository.findAll(Sort.by(Sort.Direction.DESC,"name","email"));
-//    }
 
     public User getByEmail(String email){
         Assert.notNull(email,"email is null, error");

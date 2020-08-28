@@ -10,11 +10,16 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.graduate.LoggedUser;
+import ru.graduate.model.Role;
 import ru.graduate.model.User;
 import ru.graduate.repository.UserRepository;
 import ru.graduate.service.UserService;
 
 import javax.validation.Valid;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
 
@@ -40,6 +45,9 @@ public class UserProfileController {
         if (result.hasErrors()) {
             return getStringResponseEntity(result, logger);
         } else {
+            Set<Role> roles = new HashSet<Role>();
+            roles.add(Role.USER);
+            user.setRoles(roles);
             User createdUser = service.create(user);
             logger.info("create(user) {} ", createdUser.getName());
             return new ResponseEntity<>(HttpStatus.CREATED);

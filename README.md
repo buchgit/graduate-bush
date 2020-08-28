@@ -59,7 +59,7 @@ Base URL: `localhost:8080/rest/votes`
 |?startDate=...?endDate=...?restaurantId=...?userId=|GET|Get all votes filtered by date, restaurants, and users (each parameter can be null)|[look note](#note)|200|
 |?restaurantId=...?date=.../|POST|To vote|[look note](#note)|201|
 |/|PUT|Update own vote|[look note](#note)|200|
-|/|DELETE|Delete own vote|[look note](#note)|422|
+|//{id}|DELETE|Delete own vote|[look note](#note)|204|
 
 <sub>[to table of content](#content)</sub>
 

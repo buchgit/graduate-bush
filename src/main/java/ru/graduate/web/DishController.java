@@ -23,7 +23,7 @@ import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
 @RequestMapping(DishController.DISH_URL)
 public class DishController {
 
-    static final String DISH_URL = "/dishes";
+    static final String DISH_URL = "/rest/dishes";
 
     private final Logger logger = LoggerFactory.getLogger(DishController.class);
 

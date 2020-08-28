@@ -22,7 +22,7 @@ import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
 @RequestMapping(RestaurantController.RESTAURANTS_URL)
 public class RestaurantController {
 
-    static final String RESTAURANTS_URL = "/restaurants";
+    static final String RESTAURANTS_URL = "/rest/restaurants";
 
     private final Logger logger = LoggerFactory.getLogger(RestaurantController.class);
 

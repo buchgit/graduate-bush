@@ -26,7 +26,7 @@ import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
 @RestController
 @RequestMapping(MenuController.MENU_URL)
 public class MenuController {
-    static final String MENU_URL = "/menus";
+    static final String MENU_URL = "/rest/menus";
 
     private final Logger logger = LoggerFactory.getLogger(MenuController.class);
 

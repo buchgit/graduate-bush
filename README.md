@@ -17,6 +17,7 @@ Each restaurant provides new menu each day.
 
 ## Content
 Base path for this project : `localhost:8080/rest/`
+<br>
 <a name="note"> * NOTE: file with full collection of curl commands: "graduate_bush.postman_collection.json" is located in the root directory of the project</a>
 
 * [User API](#user-api)

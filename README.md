@@ -113,7 +113,7 @@ Base URL: `localhost:8080/rest/admin`
 <sub>[to table of content](#content)</sub>
 
 #### Admin Vote:
-Base URL: `localhost:8080/rest/admin`
+Base URL: `localhost:8080/rest/votes/admin`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|

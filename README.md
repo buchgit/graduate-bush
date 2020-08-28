@@ -87,10 +87,10 @@ Base URL: `localhost:8080/rest/dishes`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/?startDate=...&endDate=...&restaurantId=...|GET|Get all dishes filtered by date and any restaurant|curl 'http://localhost:8080/dishes/?startDate=2020-07-02&endDate=2020-07-03&restaurantId=100003'|200|
-|/?startDate=...&endDate=...|GET|Get all dishes filtered by date and not filtered by restaurants|curl 'http://localhost:8080/dishes/?startDate=2020-07-02&endDate=2020-07-03'|200|
-|/name?name=...|GET|Get dish by name|curl 'http://localhost:8080/dishes/name?name=dish 1'|200|
-|/menu?id=...|GET|Get dish by menu|curl 'http://localhost:8080/dishes/menu?id=100005'|200|
+|/?startDate=...&endDate=...&restaurantId=...|GET|Get all dishes filtered by date and any restaurant|curl 'http://localhost:8080/rest/dishes/?startDate=2020-07-02&endDate=2020-07-03&restaurantId=100003'|200|
+|/?startDate=...&endDate=...|GET|Get all dishes filtered by date and not filtered by restaurants|curl 'http://localhost:8080/rest/dishes/?startDate=2020-07-02&endDate=2020-07-03'|200|
+|/name?name=...|GET|Get dish by name|curl 'http://localhost:8080/rest/dishes/name?name=dish 1'|200|
+|/menu?id=...|GET|Get dish by menu|curl 'http://localhost:8080/rest/dishes/menu?id=100005'|200|
 
 <sub>[to table of content](#content)</sub>
 
@@ -150,7 +150,7 @@ Base URL: `localhost:8080/rest/dishes/admin`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/{id}|GET|Get dishes by id|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/restaurants --user user@yandex.ru:password|200|
+|/{id}|GET|Get dishes by id|[look note](#note)|200|
 |/?menuId=...|POST|Add new dish of any menu|[look note](#note)|201|
 |/|PUT|Update dish|[look note](#note)|204|
 |/{id}|DELETE|Delete dish by ID|[look note](#note)|204|

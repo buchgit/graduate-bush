@@ -56,8 +56,8 @@ Base URL: `localhost:8080/rest`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/votes?startDate=?endDate=?restaurantId=?userId=|GET|Get all votes filtered by date, restaurants, and users (each parameter can be null)|[look note](#note)|200|
-|/votes?restaurantId=?date=/|POST|To vote|[look note](#note)|201|
+|/votes?startDate=...?endDate=...?restaurantId=...?userId=|GET|Get all votes filtered by date, restaurants, and users (each parameter can be null)|[look note](#note)|200|
+|/votes?restaurantId=...?date=.../|POST|To vote|[look note](#note)|201|
 |/votes/|PUT|Update own vote|[look note](#note)|200|
 |/votes|DELETE|Delete own vote|[look note](#note)|422|
 
@@ -69,7 +69,7 @@ Base URL: `localhost:8080/rest/restaurants`
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
 |/|GET|Get restaurant list|[look note](#note)|200|
-|/name?name=|GET|Get restaurant by name|[look note](#note)|200|
+|/name?name=...|GET|Get restaurant by name|[look note](#note)|200|
 
 <sub>[to table of content](#content)</sub>
 
@@ -87,10 +87,10 @@ Base URL: `localhost:8080/rest/dishes`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/?startDate=2020-07-02&endDate=2020-07-03&restaurantId=100003|GET|Get all dishes filtered by date and any restaurant|curl 'http://localhost:8080/dishes/?startDate=2020-07-02&endDate=2020-07-03&restaurantId=100003'|200|
-|/?startDate=2020-07-02&endDate=2020-07-03|GET|Get all dishes filtered by date and not filtered by restaurants|curl 'http://localhost:8080/dishes/?startDate=2020-07-02&endDate=2020-07-03'|200|
-|/name?name=dish 1|GET|Get dish by name|curl 'http://localhost:8080/dishes/name?name=dish 1'|200|
-|/menu?id=100005|GET|Get dish by menu|curl 'http://localhost:8080/dishes/menu?id=100005'|200|
+|/?startDate=...&endDate=...&restaurantId=...|GET|Get all dishes filtered by date and any restaurant|curl 'http://localhost:8080/dishes/?startDate=2020-07-02&endDate=2020-07-03&restaurantId=100003'|200|
+|/?startDate=...&endDate=...|GET|Get all dishes filtered by date and not filtered by restaurants|curl 'http://localhost:8080/dishes/?startDate=2020-07-02&endDate=2020-07-03'|200|
+|/name?name=...|GET|Get dish by name|curl 'http://localhost:8080/dishes/name?name=dish 1'|200|
+|/menu?id=...|GET|Get dish by menu|curl 'http://localhost:8080/dishes/menu?id=100005'|200|
 
 <sub>[to table of content](#content)</sub>
 
@@ -108,7 +108,7 @@ Base URL: `localhost:8080/rest/admin`
 |/{id}|DELETE|Delete user profile|[look note](#note)|204|
 |/{id}|GET|Get user profile by ID|curl -s http://localhost:8080/rest/admin/100000 --user admin@gmail.com:admin|200|
 |/|GET|Get all users|[look note](#note)|200|
-|/?email={email}|GET|Get user by email|[look note](#note)|200|
+|/?email=...|GET|Get user by email|[look note](#note)|200|
 
 <sub>[to table of content](#content)</sub>
 
@@ -151,7 +151,7 @@ Base URL: `localhost:8080/rest/dishes/admin`
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
 |/{id}|GET|Get dishes by id|curl -w "\t%{http_code}\n" -s http://localhost:8080/lunch_vm/rest/restaurants --user user@yandex.ru:password|200|
-|/?menuId=...|POST|Add new dish of any menu|201|
+|/?menuId=...|POST|Add new dish of any menu|[look note](#note)|201|
 |/|PUT|Update dish|[look note](#note)|204|
 |/{id}|DELETE|Delete dish by ID|[look note](#note)|204|
 

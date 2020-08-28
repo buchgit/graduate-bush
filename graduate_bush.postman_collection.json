@@ -418,10 +418,40 @@
 						{
 							"name": "create",
 							"request": {
-								"method": "GET",
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin@gmail.com",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": ""
+									"raw": "http://localhost:8080/rest/votes?restaurantId=100003",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rest",
+										"votes"
+									],
+									"query": [
+										{
+											"key": "restaurantId",
+											"value": "100003"
+										}
+									]
 								}
 							},
 							"response": []
@@ -447,13 +477,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/votes/user",
+									"raw": "http://localhost:8080/rest/votes/user",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
+										"rest",
 										"votes",
 										"user"
 									]
@@ -464,16 +495,32 @@
 						{
 							"name": "getAllFiltered Copy",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "user",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "user@gmail.com",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/votes/user?startDate=2020-07-02&endDate=2020-07-03&restaurantId=100002&userId=100000",
+									"raw": "http://localhost:8080/rest/votes/user?startDate=2020-07-02&endDate=2020-07-03&restaurantId=100002&userId=100000",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
+										"rest",
 										"votes",
 										"user"
 									],

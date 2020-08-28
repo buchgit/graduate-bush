@@ -55,8 +55,8 @@ public class VoteController {
 
     @PostMapping
     public ResponseEntity<Vote> create (@RequestParam int restaurantId,
-                                        @RequestParam @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  date,
                                         @AuthenticationPrincipal LoggedUser loggedUser){
+        LocalDate date = LocalDate.now();
         Vote created = service.create(restaurantId, date, loggedUser.getId());
         URI responseUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(VOTE_URL+"/{id}")

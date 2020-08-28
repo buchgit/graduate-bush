@@ -140,7 +140,7 @@ Base URL: `localhost:8080/rest/menus/admin`
 |---|:---:|---|---|:---:|
 |/{id}|GET|Get menu by id|[look note](#note)|200|
 |/?date=...&restaurantId=...|POST|Add new menu of any restaurant|[look note](#note)|201|
-|/|PUT|Update menu||204|
+|/|PUT|Update menu|[look note](#note)|204|
 |/{id}|DELETE|Delete menu by ID|204|
 
 <sub>[to table of content](#content)</sub>

@@ -35,8 +35,6 @@ Base path for this project : `localhost:8080/rest/`
 
 ### User API
 
-Authority: all authorized users (`/register` endpoint is available to unregistered users)
-
 #### User Profile:
 Base URL: `localhost:8080/rest/user`
 
@@ -141,7 +139,7 @@ Base URL: `localhost:8080/rest/menus/admin`
 |/{id}|GET|Get menu by id|[look note](#note)|200|
 |/?date=...&restaurantId=...|POST|Add new menu of any restaurant|[look note](#note)|201|
 |/|PUT|Update menu|[look note](#note)|204|
-|/{id}|DELETE|Delete menu by ID|204|
+|/{id}|DELETE|Delete menu by ID|[look note](#note)|204|
 
 <sub>[to table of content](#content)</sub>
 

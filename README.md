@@ -42,7 +42,7 @@ Base URL: `localhost:8080/rest/user`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/registration|POST|Registration|[look here](#note)|201|
+|/registration|POST|Registration|[look note](#note)|201|
 |/{id}|GET|Get own profile|curl -w "\t%{http_code}\n" -s http://localhost:8080/rest/user --user newemail@ya.ru:newPassword|200|
 |/|PUT|Update own profile|curl -w "\t%{http_code}\n" -s http://localhost:8080/rest/user -X PUT -H 'Content-Type:application/json;charset=UTF-8' --user newemail@ya.ru:newPassword -d '{"name":"New userName", "email":"newemail@yandex.ru", "password":"otherPassword"}'|204|
 |/{id}|DELETE|Delete own profile|curl -w "\t%{http_code}\n" -s http://localhost:8080/rest/user -X DELETE --user newemail@yandex.ru:otherPassword|204|

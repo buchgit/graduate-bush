@@ -17,7 +17,7 @@ Each restaurant provides new menu each day.
 
 ## Content
 Base path for this project : `localhost:8080/rest/`
-<a name="note"> NOTE:file with full collection of curl commands: "graduate_bush.postman_collection.json" is located in the root directory of the project</a>
+<a name="note"> * NOTE: file with full collection of curl commands: "graduate_bush.postman_collection.json" is located in the root directory of the project</a>
 
 * [User API](#user-api)
     + [User Profile](#user-profile)
@@ -41,7 +41,7 @@ Base URL: `localhost:8080/rest/user`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/registration|POST|Registration|[look here] (#note)|201|
+|/registration|POST|Registration|[look here](#note)|201|
 |/{id}|GET|Get own profile|curl -w "\t%{http_code}\n" -s http://localhost:8080/rest/user --user newemail@ya.ru:newPassword|200|
 |/|PUT|Update own profile|curl -w "\t%{http_code}\n" -s http://localhost:8080/rest/user -X PUT -H 'Content-Type:application/json;charset=UTF-8' --user newemail@ya.ru:newPassword -d '{"name":"New userName", "email":"newemail@yandex.ru", "password":"otherPassword"}'|204|
 |/{id}|DELETE|Delete own profile|curl -w "\t%{http_code}\n" -s http://localhost:8080/rest/user -X DELETE --user newemail@yandex.ru:otherPassword|204|

@@ -1,33 +1,23 @@
 package ru.graduate;
 
 import ru.graduate.model.User;
-import ru.graduate.to.UserTo;
-import ru.graduate.utils.UserUtil;
 
 public class LoggedUser extends org.springframework.security.core.userdetails.User {
     private static final long serialVersionUID = 1L;
 
-    private UserTo userTo;
+    private User user;
 
     public LoggedUser(User user) {
         super(user.getEmail(), user.getPassword(), user.isEnabled(), true, true, true, user.getRoles());
-        this.userTo = UserUtil.asTo(user);
+        this.user = user;
     }
 
     public int getId() {
-        return userTo.getId();
-    }
-
-    public void update(UserTo newTo) {
-        userTo = newTo;
-    }
-
-    public UserTo getUserTo() {
-        return userTo;
+        return user.getId();
     }
 
     @Override
     public String toString() {
-        return userTo.toString();
+        return user.toString();
     }
 }

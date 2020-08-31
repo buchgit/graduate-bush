@@ -107,6 +107,7 @@ Base URL: `localhost:8080/rest/admin`
 |/{id}|GET|Get user profile by ID|curl -s http://localhost:8080/rest/admin/100000 --user admin@gmail.com:admin|200|
 |/|GET|Get all users|[look note](#note)|200|
 |/?email=...|GET|Get user by email|[look note](#note)|200|
+|/{id}?enabled=...|POST|Set user enabled true/false|[look note](#note)|200|
 
 <sub>[to table of content](#content)</sub>
 

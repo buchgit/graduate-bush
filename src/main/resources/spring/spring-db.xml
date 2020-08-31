@@ -69,4 +69,9 @@
         <context:component-scan base-package="ru.graduate.**.repository"/>
         <jpa:repositories base-package="ru.graduate.**.repository"/>
 
+    <beans profile="tomcat">
+        <jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/graduate"/>
+        <context:property-placeholder location="classpath:db/tomcat.properties" system-properties-mode="OVERRIDE"/>
+    </beans>
+
 </beans>

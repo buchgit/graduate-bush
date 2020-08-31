@@ -1,17 +1,22 @@
 package ru.graduate.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import ru.graduate.LoggedUser;
 import ru.graduate.model.User;
 import ru.graduate.repository.UserRepository;
+
+import java.util.List;
 
 import static ru.graduate.utils.ValidationUtil.checkNotFoundWithId;
 import static ru.graduate.utils.ValidationUtil.checkNotFound;
@@ -29,16 +34,19 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     public User create(User user){
         Assert.notNull(user,"user is null, error");
         return prepareAndSave(user);
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     public User update(User user, int id){
         Assert.notNull(user,"user is null, error");
         return checkNotFoundWithId(prepareAndSave(user),id);
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     public void delete(int id){
         checkNotFoundWithId(userRepository.delete(id),id);
     }
@@ -55,6 +63,13 @@ public class UserService implements UserDetailsService {
 //    public User getAllWithRoles(int id){
 //        return checkNotFoundWithId(userRepository.getAllWithRoles(id),id);
 //    }
+
+    @CacheEvict(value = "users", allEntries = true)
+    @Transactional
+    public void enable(int id, boolean enabled) {
+        User user = getById(id);
+        user.setEnabled(enabled);
+    }
 
     @Override
     public LoggedUser loadUserByUsername(String email) throws UsernameNotFoundException {

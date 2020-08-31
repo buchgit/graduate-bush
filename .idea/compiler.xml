@@ -9,5 +9,8 @@
         <module name="gr-project-bush" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="gr-project-bush" target="14" />
+    </bytecodeTargetLevel>
   </component>
 </project>

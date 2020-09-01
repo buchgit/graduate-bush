@@ -14,7 +14,8 @@ import javax.annotation.PostConstruct;
 
 @SpringJUnitWebConfig(locations = {
         "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-cache.xml",
+        "classpath:spring/spring-db.xml",
+        //"classpath:spring/spring-cache.xml",
         "classpath:spring/spring-mvc.xml"
 })
 @Transactional
@@ -26,7 +27,7 @@ public abstract class AbstractControllerTest {
         CHARACTER_ENCODING_FILTER.setForceEncoding(true);
     }
 
-    private MockMvc mockMvc;
+    protected MockMvc mockMvc;
 
     @Autowired
     private WebApplicationContext webApplicationContext;

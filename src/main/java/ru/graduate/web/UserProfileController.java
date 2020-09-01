@@ -27,7 +27,7 @@ import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
 @RequestMapping(UserProfileController.REST_URL)
 public class UserProfileController {
 
-    static final String REST_URL = "rest/user";
+    static final String REST_URL = "/rest/user";
 
     private final Logger logger = LoggerFactory.getLogger(UserProfileController.class);
 

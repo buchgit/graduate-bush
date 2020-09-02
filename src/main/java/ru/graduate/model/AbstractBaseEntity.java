@@ -1,6 +1,7 @@
 package ru.graduate.model;
 
 import org.hibernate.Hibernate;
+
 import javax.persistence.*;
 
 @MappedSuperclass

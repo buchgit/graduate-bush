@@ -16,7 +16,7 @@ import java.util.*;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "users")
-public class User extends AbstractNamedEntity{
+public class User extends AbstractNamedEntity {
     @Column(name = "email")
     @Email
     @NotBlank
@@ -45,7 +45,7 @@ public class User extends AbstractNamedEntity{
     @BatchSize(size = 200)
     private Set<Role> roles;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Vote> votes;
 
     public User() {
@@ -116,6 +116,6 @@ public class User extends AbstractNamedEntity{
                 ", name=" + name +
                 ", enabled=" + enabled +
                 ", roles=" + roles +
-                 '}';
+                '}';
     }
 }

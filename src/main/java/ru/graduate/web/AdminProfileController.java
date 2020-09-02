@@ -83,7 +83,6 @@ public class AdminProfileController {
         return service.getByEmail(email);
     }
 
-    //проверен +
     @PostMapping("/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void enable(@PathVariable int id, @RequestParam boolean enabled) {

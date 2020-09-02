@@ -5,11 +5,10 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "dishes")
-public class Dish extends AbstractNamedEntity{
+public class Dish extends AbstractNamedEntity {
 
     @ManyToOne
     @JoinColumn(name = "menu_id")
@@ -17,7 +16,7 @@ public class Dish extends AbstractNamedEntity{
     private Menu menu;
 
     @Column
-    @Range(min = 0,max = 100000)
+    @Range(min = 0, max = 100000)
     private double price;
 
     public Dish() {

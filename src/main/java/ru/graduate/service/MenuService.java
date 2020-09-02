@@ -24,24 +24,24 @@ public class MenuService {
         this.restaurantRepository = restaurantRepository;
     }
 
-    public Menu create(LocalDate date, int restaurantId){
-        Assert.notNull(date,"Menu date must not be null");
+    public Menu create(LocalDate date, int restaurantId) {
+        Assert.notNull(date, "Menu date must not be null");
         LocalDateTime startOfDay = TimeUtils.toBeginOfDay(date);
-        Menu menu = new Menu(startOfDay,restaurantRepository.getOne(restaurantId));
+        Menu menu = new Menu(startOfDay, restaurantRepository.getOne(restaurantId));
         return repository.save(menu);
     }
 
-    public Menu get(int id){
-        return ValidationUtil.checkNotFoundWithId(repository.findById(id).orElse(null),id);
+    public Menu get(int id) {
+        return ValidationUtil.checkNotFoundWithId(repository.findById(id).orElse(null), id);
     }
 
-    public void delete (int id){
-        ValidationUtil.checkNotFoundWithId(repository.delete(id)!=0,id);
+    public void delete(int id) {
+        ValidationUtil.checkNotFoundWithId(repository.delete(id) != 0, id);
     }
 
-    public void update (Menu menu){
-        Assert.notNull(menu,"Dish must not be null");
-        ValidationUtil.checkNotFoundWithId(repository.save(menu),menu.getId());
+    public void update(Menu menu) {
+        Assert.notNull(menu, "Dish must not be null");
+        ValidationUtil.checkNotFoundWithId(repository.save(menu), menu.getId());
     }
 
     public List<Menu> getAllFiltered(LocalDate startDate, LocalDate endDate, Integer restaurantId) {
@@ -49,17 +49,4 @@ public class MenuService {
         LocalDateTime endOfDay = TimeUtils.toEndOfDay(endDate);
         return repository.getAllFiltered(startOfDay, endOfDay, restaurantId);
     }
-
-//    public List<Menu> getByRestaurant(int restaurantId){
-//        return repository.getByRestaurant(restaurantId);
-//    }
-//
-//    public List<Menu> getBetween(LocalDate startDate, LocalDate endDate) {
-//        LocalDateTime startOfDay = TimeUtils.toBeginOfDay(startDate);
-//        LocalDateTime endOfDay = TimeUtils.toEndOfDay(endDate);
-//        return repository.getBetween(startOfDay, endOfDay);
-//    }
-
-
-
 }

@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +14,6 @@ import ru.graduate.repository.RestaurantRepository;
 import ru.graduate.service.RestaurantService;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.util.List;
 
 import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
@@ -44,34 +41,34 @@ public class RestaurantController {
      */
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Restaurant> getAll(){
+    public List<Restaurant> getAll() {
         logger.info("getAll");
-        return repository.findAll(Sort.by(Sort.Direction.DESC,"name"));
+        return repository.findAll(Sort.by(Sort.Direction.DESC, "name"));
     }
 
-    @GetMapping(value = "/name",produces = MediaType.APPLICATION_JSON_VALUE)
-    public Restaurant getByName(@RequestParam String name){
-        logger.info("getByName(name) {} ",name);
+    @GetMapping(value = "/name", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Restaurant getByName(@RequestParam String name) {
+        logger.info("getByName(name) {} ", name);
         return service.getByName(name);
     }
 
     /*
-    *** Admin section ***
+     *** Admin section ***
      */
 
     @GetMapping("/admin/{id}")
     public Restaurant get(@PathVariable int id) {
-        logger.info("get(id) {} ",id);
+        logger.info("get(id) {} ", id);
         return service.get(id);
     }
 
     @PostMapping("/admin")
-    public ResponseEntity<String> create (@Valid @RequestBody Restaurant restaurant, BindingResult result){
-        if (result.hasErrors()){
+    public ResponseEntity<String> create(@Valid @RequestBody Restaurant restaurant, BindingResult result) {
+        if (result.hasErrors()) {
             return getStringResponseEntity(result, logger);
-        }else{
+        } else {
             Restaurant created = service.create(restaurant);
-            logger.info("create(restaurant) {} ",created);
+            logger.info("create(restaurant) {} ", created);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
     }
@@ -90,8 +87,8 @@ public class RestaurantController {
 
     @DeleteMapping("/admin/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id){
-        logger.info("delete(id) {} ",id);
+    public void delete(@PathVariable int id) {
+        logger.info("delete(id) {} ", id);
         service.delete(id);
     }
 }

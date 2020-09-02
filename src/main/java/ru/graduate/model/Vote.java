@@ -1,15 +1,15 @@
 package ru.graduate.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "votes")
-public class Vote extends AbstractBaseEntity{
+public class Vote extends AbstractBaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)

@@ -7,9 +7,6 @@ import ru.graduate.model.Restaurant;
 import ru.graduate.repository.RestaurantRepository;
 import ru.graduate.utils.ValidationUtil;
 
-import java.time.LocalDate;
-import java.util.List;
-
 @Service
 public class RestaurantService {
     public final RestaurantRepository repository;
@@ -19,26 +16,26 @@ public class RestaurantService {
         this.repository = repository;
     }
 
-    public Restaurant create(Restaurant restaurant){
-        Assert.notNull(restaurant,"restaurant must not be null");
+    public Restaurant create(Restaurant restaurant) {
+        Assert.notNull(restaurant, "restaurant must not be null");
         return repository.save(restaurant);
     }
 
-    public Restaurant get(int id){
-        return ValidationUtil.checkNotFoundWithId(repository.findById(id).orElse(null),id);
+    public Restaurant get(int id) {
+        return ValidationUtil.checkNotFoundWithId(repository.findById(id).orElse(null), id);
     }
 
-    public Restaurant getByName(String name){
-        Assert.notNull(name,"restaurant name must not be null");
+    public Restaurant getByName(String name) {
+        Assert.notNull(name, "restaurant name must not be null");
         return repository.getByName(name);
     }
 
-    public void delete (int id){
-        ValidationUtil.checkNotFoundWithId(repository.delete(id)!=0,id);
+    public void delete(int id) {
+        ValidationUtil.checkNotFoundWithId(repository.delete(id) != 0, id);
     }
 
-    public void update (Restaurant restaurant){
-        Assert.notNull(restaurant,"restaurant must not be null");
-        ValidationUtil.checkNotFoundWithId(repository.save(restaurant),restaurant.getId());
+    public void update(Restaurant restaurant) {
+        Assert.notNull(restaurant, "restaurant must not be null");
+        ValidationUtil.checkNotFoundWithId(repository.save(restaurant), restaurant.getId());
     }
 }

@@ -2,7 +2,6 @@ package ru.graduate.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,8 +14,6 @@ import org.springframework.util.StringUtils;
 import ru.graduate.LoggedUser;
 import ru.graduate.model.User;
 import ru.graduate.repository.UserRepository;
-
-import java.util.List;
 
 import static ru.graduate.utils.ValidationUtil.checkNotFoundWithId;
 import static ru.graduate.utils.ValidationUtil.checkNotFound;
@@ -35,34 +32,30 @@ public class UserService implements UserDetailsService {
     }
 
     @CacheEvict(value = "users", allEntries = true)
-    public User create(User user){
-        Assert.notNull(user,"user is null, error");
+    public User create(User user) {
+        Assert.notNull(user, "user is null, error");
         return prepareAndSave(user);
     }
 
     @CacheEvict(value = "users", allEntries = true)
-    public User update(User user, int id){
-        Assert.notNull(user,"user is null, error");
-        return checkNotFoundWithId(prepareAndSave(user),id);
+    public User update(User user, int id) {
+        Assert.notNull(user, "user is null, error");
+        return checkNotFoundWithId(prepareAndSave(user), id);
     }
 
     @CacheEvict(value = "users", allEntries = true)
-    public void delete(int id){
-        checkNotFoundWithId(userRepository.delete(id),id);
+    public void delete(int id) {
+        checkNotFoundWithId(userRepository.delete(id), id);
     }
 
-    public User getById(int id){
+    public User getById(int id) {
         return userRepository.findById(id).orElse(null);
     }
 
-    public User getByEmail(String email){
-        Assert.notNull(email,"email is null, error");
-        return checkNotFound(userRepository.getByEmail(email),email);
+    public User getByEmail(String email) {
+        Assert.notNull(email, "email is null, error");
+        return checkNotFound(userRepository.getByEmail(email), email);
     }
-
-//    public User getAllWithRoles(int id){
-//        return checkNotFoundWithId(userRepository.getAllWithRoles(id),id);
-//    }
 
     @CacheEvict(value = "users", allEntries = true)
     @Transactional

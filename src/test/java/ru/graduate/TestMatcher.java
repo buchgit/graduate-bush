@@ -1,8 +1,8 @@
 package ru.graduate;
 
 import java.util.function.BiConsumer;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import org.springframework.test.web.servlet.ResultMatcher;
 
 public class TestMatcher<T> {
 
@@ -29,11 +29,5 @@ public class TestMatcher<T> {
     public void assertMatch(T actual, T expected) {
         assertion.accept(actual, expected);
     }
-
-    public ResultMatcher contentJson(T expected) {
-        return result -> assertMatch(TestUtil.readFromJsonMvcResult(result, clazz), expected);
-    }
-
-
 
 }

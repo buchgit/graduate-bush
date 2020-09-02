@@ -18,7 +18,6 @@ import ru.graduate.repository.VoteRepository;
 import ru.graduate.service.VoteService;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
@@ -43,45 +42,45 @@ public class VoteController {
      *** General section ***
      */
 
-    @GetMapping(value = "/user",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Vote> getAllFiltered(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  startDate,
-                                     @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  endDate,
+    @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Vote> getAllFiltered(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                     @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
                                      @RequestParam(required = false) @Nullable Integer restaurantId,
                                      @RequestParam(required = false) @Nullable Integer userId
-    ){
-        logger.info("getAllFiltered(...) {} {} {} ",startDate,endDate,restaurantId,userId);
-        return service.getAllFiltered(startDate,endDate,restaurantId,userId);
+    ) {
+        logger.info("getAllFiltered(...) {} {} {} ", startDate, endDate, restaurantId, userId);
+        return service.getAllFiltered(startDate, endDate, restaurantId, userId);
     }
 
     @PostMapping
-    public ResponseEntity<Vote> create (@RequestParam int restaurantId,
-                                        @AuthenticationPrincipal LoggedUser loggedUser){
+    public ResponseEntity<Vote> create(@RequestParam int restaurantId,
+                                       @AuthenticationPrincipal LoggedUser loggedUser) {
         LocalDate date = LocalDate.now();
         Vote created = service.create(restaurantId, date, loggedUser.getId());
         URI responseUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(VOTE_URL+"/{id}")
+                .path(VOTE_URL + "/{id}")
                 .buildAndExpand(created.getId())
                 .toUri();
-        logger.info("create(restaurantId,date,userId) {} {} {} ",restaurantId,date,loggedUser.getId());
+        logger.info("create(restaurantId,date,userId) {} {} {} ", restaurantId, date, loggedUser.getId());
         return ResponseEntity.created(responseUri).body(created);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<String> update (@Valid @RequestBody Vote vote, BindingResult result , @AuthenticationPrincipal LoggedUser loggedUser){
-        if (result.hasErrors()){
+    public ResponseEntity<String> update(@Valid @RequestBody Vote vote, BindingResult result, @AuthenticationPrincipal LoggedUser loggedUser) {
+        if (result.hasErrors()) {
             return getStringResponseEntity(result, logger);
-        }else{
-            service.update(vote,loggedUser.getId());
-            logger.info("update (vote) {} ",vote);
+        } else {
+            service.update(vote, loggedUser.getId());
+            logger.info("update (vote) {} ", vote);
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id, @AuthenticationPrincipal LoggedUser loggedUser){
-        logger.info("delete(id) {} ",loggedUser.getId());
+    public void delete(@PathVariable int id, @AuthenticationPrincipal LoggedUser loggedUser) {
+        logger.info("delete(id) {} ", loggedUser.getId());
         service.delete(id, loggedUser.getId());
     }
 
@@ -91,8 +90,8 @@ public class VoteController {
 
     @DeleteMapping("/admin/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id){
-        logger.info("delete(id) {} ",id);
-        service.delete(id,null);
+    public void delete(@PathVariable int id) {
+        logger.info("delete(id) {} ", id);
+        service.delete(id, null);
     }
 }

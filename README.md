@@ -1,3 +1,4 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/956581f626de453fa959b789e814b09b)](https://www.codacy.com/manual/buchgit/graduate-bush?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=buchgit/graduate-bush&amp;utm_campaign=Badge_Grade)
 # Graduation project
 Design and implement a REST API using Hibernate/Spring/SpringMVC (or Spring-Boot) without frontend.
 

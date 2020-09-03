@@ -12,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.graduate.model.Menu;
-import ru.graduate.repository.MenuRepository;
 import ru.graduate.service.MenuService;
 
 import javax.validation.Valid;
@@ -33,7 +32,7 @@ public class MenuController {
     private final MenuService service;
 
     @Autowired
-    public MenuController(MenuService service, MenuRepository repository) {
+    public MenuController(MenuService service) {
         this.service = service;
     }
 

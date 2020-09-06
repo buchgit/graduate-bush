@@ -26,6 +26,7 @@ public class TestMatcher<T> {
                 (a, e) -> assertThat(a).usingElementComparatorIgnoringFields(fieldsToIgnore).isEqualTo(e));
     }
 
+
     public void assertMatch(T actual, T expected) {
         assertion.accept(actual, expected);
     }

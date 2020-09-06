@@ -1,9 +1,6 @@
-.idea
-out
-target
 *.iml
 log
-*.patch
 .git
 /.idea/
 /target/
+.md

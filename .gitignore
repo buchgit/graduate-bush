@@ -3,4 +3,4 @@ log
 .git
 /.idea/
 /target/
-.md
+README.md

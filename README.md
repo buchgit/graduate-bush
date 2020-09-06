@@ -37,59 +37,59 @@ Base path for this project : `localhost:8080/`
 ### User API
 
 #### User Profile:
-Base URL: `localhost:8080/rest/user`
+Base URL: `localhost:8080`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/rest/registration|POST|Registration|[look note](#note)|201|
-|/rest/{id}|GET|Get own profile|curl -s http://localhost:8080/rest/user --user user@gmail.com:user|200|
-|/rest/|PUT|Update own profile|[look note](#note)|204|
-|/rest/{id}|DELETE|Delete own profile|curl -s -X DELETE http://localhost:8080/rest/user/100000 --user user@gmail.com:user|204|
+|/rest/user/registration|POST|Registration|[look note](#note)|201|
+|/rest/user/{id}|GET|Get own profile|curl -s http://localhost:8080/rest/user --user user@gmail.com:user|200|
+|/rest/user|PUT|Update own profile|[look note](#note)|204|
+|/rest/user|DELETE|Delete own profile|curl -s -X DELETE http://localhost:8080/rest/user --user user@gmail.com:user|204|
 
 <sub>[to table of content](#content)</sub>
 
 #### User Vote:
-Base URL: `localhost:8080/rest/votes`
+Base URL: `localhost:8080`
 
 **NOTE:** *by default decision time is 11:00 AM*
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/rest?startDate=...?endDate=...?restaurantId=...?userId=|GET|Get all votes filtered by date, restaurants, and users (each parameter can be null)|[look note](#note)|200|
-|/rest?restaurantId=...?date=.../|POST|To vote|[look note](#note)|201|
-|/rest|PUT|Update own vote|[look note](#note)|200|
-|/rest/{id}|DELETE|Delete own vote|[look note](#note)|204|
+|/rest/votes?startDate=...?endDate=...?restaurantId=...?userId=|GET|Get all votes filtered by date, restaurants, and users (each parameter can be null)|[look note](#note)|200|
+|/rest/votes?restaurantId=...?date=.../|POST|To vote|[look note](#note)|201|
+|/rest/votes|PUT|Update own vote|[look note](#note)|200|
+|/rest/votes/{id}|DELETE|Delete own vote|[look note](#note)|204|
 
 <sub>[to table of content](#content)</sub>
 
 #### User Restaurant:
-Base URL: `localhost:8080/rest/restaurants`
+Base URL: `localhost:8080`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/rest|GET|Get restaurant list|[look note](#note)|200|
-|/rest/name?name=...|GET|Get restaurant by name|[look note](#note)|200|
+|/rest/restaurants|GET|Get restaurant list|[look note](#note)|200|
+|/rest/restaurants/name?name=...|GET|Get restaurant by name|[look note](#note)|200|
 
 <sub>[to table of content](#content)</sub>
 
 #### User Menu:
-Base URL: `localhost:8080/rest/menus`
+Base URL: `localhost:8080`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/rest?startDate=...&endDate=...&restaurantId=...|GET|Get filtered menu list (each param can be null)|[look note](#note)|200|
+|/rest/menus?startDate=...&endDate=...&restaurantId=...|GET|Get filtered menu list (each param can be null)|[look note](#note)|200|
 
 <sub>[to table of content](#content)</sub>
 
 #### User Dish:
-Base URL: `localhost:8080/rest/dishes`
+Base URL: `localhost:8080`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/rest?startDate=...&endDate=...&restaurantId=...|GET|Get all dishes filtered by date and any restaurant|[look note](#note)|200|
-|/rest?startDate=...&endDate=...|GET|Get all dishes filtered by date and not filtered by restaurants|[look note](#note)|200|
-|/rest/name?name=...|GET|Get dish by name|[look note](#note)|200|
-|/rest/menu?id=...|GET|Get dish by menu|curl -s http://localhost:8080/rest/dishes/menu?id=100005 --user user@gmail.com:user|200|
+|/rest/dishes?startDate=...&endDate=...&restaurantId=...|GET|Get all dishes filtered by date and any restaurant|[look note](#note)|200|
+|/rest/dishes?startDate=...&endDate=...|GET|Get all dishes filtered by date and not filtered by restaurants|[look note](#note)|200|
+|/rest/dishes/name?name=...|GET|Get dish by name|[look note](#note)|200|
+|/rest/dishes/menu?id=...|GET|Get dish by menu|curl -s http://localhost:8080/rest/dishes/menu?id=100005 --user user@gmail.com:user|200|
 
 <sub>[to table of content](#content)</sub>
 
@@ -98,62 +98,62 @@ Base URL: `localhost:8080/rest/dishes`
 Authority: admins only (who has role `ROLE_ADMIN`)
 
 #### Admin Profile:
-Base URL: `localhost:8080/rest/admin`
+Base URL: `localhost:8080`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/rest|POST|Create new user|[look note](#note)|201|
-|/rest/{id}|PUT|Update user profile|[look note](#note)|200|
-|/rest/{id}|DELETE|Delete user profile|[look note](#note)|204|
-|/rest/{id}|GET|Get user profile by ID|curl -s http://localhost:8080/rest/admin/100000 --user admin@gmail.com:admin|200|
-|/rest/|GET|Get all users|[look note](#note)|200|
-|/rest?email=...|GET|Get user by email|[look note](#note)|200|
-|/rest/{id}?enabled=...|POST|Set user enabled true/false|[look note](#note)|200|
+|/rest/admin|POST|Create new user|[look note](#note)|201|
+|/rest/admin/{id}|PUT|Update user profile|[look note](#note)|200|
+|/rest/admin/{id}|DELETE|Delete user profile|[look note](#note)|204|
+|/rest/admin/{id}|GET|Get user profile by ID|curl -s http://localhost:8080/rest/admin/100000 --user admin@gmail.com:admin|200|
+|/rest/admin|GET|Get all users|[look note](#note)|200|
+|/rest/admin?email=...|GET|Get user by email|[look note](#note)|200|
+|/rest/admin/{id}?enabled=...|POST|Set user enabled true/false|[look note](#note)|200|
 
 <sub>[to table of content](#content)</sub>
 
 #### Admin Vote:
-Base URL: `localhost:8080/rest/votes/admin`
+Base URL: `localhost:8080`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/rest{id}|DELETE|Delete any vote|[look note](#note)|422|
+|/rest/votes/admin{id}|DELETE|Delete any vote|[look note](#note)|422|
 
 <sub>[to table of content](#content)</sub>
 
 #### Admin Restaurant:
-Base URL: `localhost:8080/rest/restaurants/admin`
+Base URL: `localhost:8080`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/rest/{id}|GET|Get restaurant by id|[look note](#note)|200|
-|/rest/|POST|Add new restaurant|[look note](#note)|201|
-|/rest/|PUT|Update restaurant|[look note](#note)|204|
-|/rest/{id}|DELETE|Delete restaurant by ID|[look note](#note)|204|
+|/rest/restaurants/admin/{id}|GET|Get restaurant by id|[look note](#note)|200|
+|/rest/restaurants/admin|POST|Add new restaurant|[look note](#note)|201|
+|/rest/restaurants/admin|PUT|Update restaurant|[look note](#note)|204|
+|/rest/restaurants/admin/{id}|DELETE|Delete restaurant by ID|[look note](#note)|204|
 
 <sub>[to table of content](#content)</sub>
 
 #### Admin Menu:
-Base URL: `localhost:8080/rest/menus/admin`
+Base URL: `localhost:8080`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/rest/{id}|GET|Get menu by id|[look note](#note)|200|
-|/rest/?date=...&restaurantId=...|POST|Add new menu of any restaurant|[look note](#note)|201|
-|/rest/|PUT|Update menu|[look note](#note)|204|
-|/rest/{id}|DELETE|Delete menu by ID|[look note](#note)|204|
+|/rest/menus/admin/{id}|GET|Get menu by id|[look note](#note)|200|
+|/rest/menus/admin?date=...&restaurantId=...|POST|Add new menu of any restaurant|[look note](#note)|201|
+|/rest/menus/admin|PUT|Update menu|[look note](#note)|204|
+|/rest/menus/admin/{id}|DELETE|Delete menu by ID|[look note](#note)|204|
 
 <sub>[to table of content](#content)</sub>
 
 #### Admin Dish:
-Base URL: `localhost:8080/rest/dishes/admin`
+Base URL: `localhost:8080`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/rest/{id}|GET|Get dishes by id|[look note](#note)|200|
-|/rest/?menuId=...|POST|Add new dish of any menu|[look note](#note)|201|
-|/rest/|PUT|Update dish|[look note](#note)|204|
-|/rest/{id}|DELETE|Delete dish by ID|[look note](#note)|204|
+|/rest/dishes/admin/{id}|GET|Get dishes by id|[look note](#note)|200|
+|/rest/dishes/admin?menuId=...|POST|Add new dish of any menu|[look note](#note)|201|
+|/rest/dishes/admin|PUT|Update dish|[look note](#note)|204|
+|/rest/dishes/admin/{id}|DELETE|Delete dish by ID|[look note](#note)|204|
 
 <sub>[to table of content](#content)</sub>
 

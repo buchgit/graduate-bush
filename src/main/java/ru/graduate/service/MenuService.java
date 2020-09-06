@@ -6,11 +6,9 @@ import org.springframework.util.Assert;
 import ru.graduate.model.Menu;
 import ru.graduate.repository.MenuRepository;
 import ru.graduate.repository.RestaurantRepository;
-import ru.graduate.utils.TimeUtils;
 import ru.graduate.utils.ValidationUtil;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -26,8 +24,7 @@ public class MenuService {
 
     public Menu create(LocalDate date, int restaurantId) {
         Assert.notNull(date, "Menu date must not be null");
-        LocalDateTime startOfDay = TimeUtils.toBeginOfDay(date);
-        Menu menu = new Menu(startOfDay, restaurantRepository.getOne(restaurantId));
+        Menu menu = new Menu(date, restaurantRepository.getOne(restaurantId));
         return repository.save(menu);
     }
 
@@ -45,8 +42,6 @@ public class MenuService {
     }
 
     public List<Menu> getAllFiltered(LocalDate startDate, LocalDate endDate, Integer restaurantId) {
-        LocalDateTime startOfDay = TimeUtils.toBeginOfDay(startDate);
-        LocalDateTime endOfDay = TimeUtils.toEndOfDay(endDate);
-        return repository.getAllFiltered(startOfDay, endOfDay, restaurantId);
+        return repository.getAllFiltered(startDate, endDate, restaurantId);
     }
 }

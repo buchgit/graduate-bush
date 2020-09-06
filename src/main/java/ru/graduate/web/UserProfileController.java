@@ -54,7 +54,7 @@ public class UserProfileController {
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<String> update(@Valid @RequestBody User user, @AuthenticationPrincipal LoggedUser loggedUser, BindingResult result) {
+    public ResponseEntity<String> update(@Valid @RequestBody User user, BindingResult result, @AuthenticationPrincipal LoggedUser loggedUser) {
         if (result.hasErrors()) {
             return getStringResponseEntity(result, logger);
         } else {

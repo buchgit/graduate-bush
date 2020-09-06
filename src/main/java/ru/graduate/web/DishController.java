@@ -73,8 +73,8 @@ public class DishController {
 
     @PostMapping("/admin")
     public ResponseEntity<String> create(@Valid @RequestBody Dish dish,
-                                         @RequestParam int menuId,
-                                         BindingResult result
+                                         BindingResult result,
+                                         @RequestParam int menuId
     ) {
         if (result.hasErrors()) {
             return getStringResponseEntity(result, logger);

@@ -72,12 +72,6 @@ public class AdminProfileController {
         return repository.findById(Id).orElse(null);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<User> getAll() {
-        logger.info("getAll");
-        return repository.findAll(Sort.by(Sort.Direction.DESC, "name", "email"));
-    }
-
     @GetMapping("/email")
     public User getByEmail(@RequestParam String email) {
         return service.getByEmail(email);

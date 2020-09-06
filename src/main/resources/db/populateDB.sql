@@ -106,4 +106,4 @@ VALUES ((SELECT ID
          FROM MENUS m
          WHERE m.RESTAURANT_ID =
                (SELECT RESTAURANTS.ID FROM RESTAURANTS WHERE NAME = 'Restaurant 3')
-           AND m.DATE = '2020-07-03'), 'dish 6', 50.88);
+           AND m.DATE = '2020-07-03'), 'dish 11', 50.88);

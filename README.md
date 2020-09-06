@@ -106,7 +106,6 @@ Base URL: `localhost:8080`
 |/rest/admin/{id}|PUT|Update user profile|[look note](#note)|200|
 |/rest/admin/{id}|DELETE|Delete user profile|[look note](#note)|204|
 |/rest/admin/{id}|GET|Get user profile by ID|curl -s http://localhost:8080/rest/admin/100000 --user admin@gmail.com:admin|200|
-|/rest/admin|GET|Get all users|[look note](#note)|200|
 |/rest/admin?email=...|GET|Get user by email|[look note](#note)|200|
 |/rest/admin/{id}?enabled=...|POST|Set user enabled true/false|[look note](#note)|200|
 

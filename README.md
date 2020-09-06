@@ -117,7 +117,7 @@ Base URL: `localhost:8080`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/rest/votes/admin{id}|DELETE|Delete any vote|[look note](#note)|422|
+|/rest/votes/admin/{id}|DELETE|Delete any vote|[look note](#note)|422|
 
 <sub>[to table of content](#content)</sub>
 

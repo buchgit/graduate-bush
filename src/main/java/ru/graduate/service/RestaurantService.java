@@ -7,6 +7,9 @@ import ru.graduate.model.Restaurant;
 import ru.graduate.repository.RestaurantRepository;
 import ru.graduate.utils.ValidationUtil;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Service
 public class RestaurantService {
     public final RestaurantRepository repository;
@@ -38,4 +41,9 @@ public class RestaurantService {
         Assert.notNull(restaurant, "restaurant must not be null");
         ValidationUtil.checkNotFoundWithId(repository.save(restaurant), restaurant.getId());
     }
+
+    public List<Restaurant> getActual(){
+        return repository.findActualWithDish(LocalDate.now());
+    }
+
 }

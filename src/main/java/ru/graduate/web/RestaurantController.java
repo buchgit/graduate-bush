@@ -52,6 +52,12 @@ public class RestaurantController {
         return service.getByName(name);
     }
 
+    @GetMapping(value = "/actual")
+    public List<Restaurant>getActual(){
+        logger.info("getActual()");
+        return service.getActual();
+    }
+
     /*
      *** Admin section ***
      */

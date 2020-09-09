@@ -43,13 +43,9 @@ public class VoteController {
      */
 
     @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Vote> getAllFiltered(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                     @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-                                     @RequestParam(required = false) @Nullable Integer restaurantId,
-                                     @RequestParam(required = false) @Nullable Integer userId
-    ) {
-        logger.info("getAllFiltered(...) {} {} {} ", startDate, endDate, restaurantId, userId);
-        return service.getAllFiltered(startDate, endDate, restaurantId, userId);
+    public List<Vote> getAllActual() {
+        logger.info("getAllActual() ");
+        return service.getAllFiltered(LocalDate.now(),LocalDate.now(),null,null);
     }
 
     @PostMapping
@@ -87,6 +83,16 @@ public class VoteController {
     /*
      *** Admin section ***
      */
+
+    @GetMapping(value = "/admin", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Vote> getAllFiltered(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                     @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+                                     @RequestParam(required = false) @Nullable Integer restaurantId,
+                                     @RequestParam(required = false) @Nullable Integer userId
+    ) {
+        logger.info("getAllFiltered(...) {} {} {} ", startDate, endDate, restaurantId, userId);
+        return service.getAllFiltered(startDate, endDate, restaurantId, userId);
+    }
 
     @DeleteMapping("/admin/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

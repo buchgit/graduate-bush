@@ -1,12 +1,14 @@
 package ru.graduate.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "menus")
@@ -16,13 +18,15 @@ public class Menu extends AbstractBaseEntity {
     private LocalDate date;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "restaurant_id")
+    @JsonBackReference
     private Restaurant restaurant;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
-    private List<Dish> dishes;
+    @OneToMany(mappedBy = "menu", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private Set<Dish> dishes;
 
     public Menu() {
     }

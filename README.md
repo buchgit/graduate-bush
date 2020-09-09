@@ -55,7 +55,7 @@ Base URL: `localhost:8080`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/rest/votes?startDate=...?endDate=...?restaurantId=...?userId=|GET|Get all votes filtered by date, restaurants, and users (each parameter can be null)|[look note](#note)|200|
+|/rest/votes/user|GET|Get votes for today|[look note](#note)|200|
 |/rest/votes?restaurantId=...|POST|To vote|[look note](#note)|201|
 |/rest/votes|PUT|Update own vote|[look note](#note)|200|
 |/rest/votes/{id}|DELETE|Delete own vote|[look note](#note)|204|
@@ -69,6 +69,7 @@ Base URL: `localhost:8080`
 |---|:---:|---|---|:---:|
 |/rest/restaurants|GET|Get restaurant list|[look note](#note)|200|
 |/rest/restaurants/name?name=...|GET|Get restaurant by name|[look note](#note)|200|
+|/rest/restaurants/actual|GET|Get a list of restaurants for today|[look note](#note)|200|
 
 <sub>[to table of content](#content)</sub>
 
@@ -116,7 +117,8 @@ Base URL: `localhost:8080`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/rest/votes/admin/{id}|DELETE|Delete any vote|[look note](#note)|422|
+|/rest/votes/admin?startDate=...?endDate=...?restaurantId=...?userId=|GET|Get all votes filtered by date, restaurants, and users (each parameter can be null)|[look note](#note)|200|
+|/rest/votes/admin/{id}|DELETE|Delete any vote (for exceptional situations)|[look note](#note)|400|
 
 <sub>[to table of content](#content)</sub>
 

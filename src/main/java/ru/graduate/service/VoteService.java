@@ -36,7 +36,7 @@ public class VoteService {
         return repository.save(vote);
     }
 
-    //user: own votes only, before and equal at 11 am only
+    //user: own votes only, before or equal at 11 am only
     public void update(Vote vote, int userId) {
         Assert.notNull(vote, "Vote must not be null");
         if (timeIsOver(vote.getDate().toLocalTime())) {

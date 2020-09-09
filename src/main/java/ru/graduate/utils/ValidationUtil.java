@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import ru.graduate.utils.exceptions.NotFoundException;
 
 import java.time.LocalTime;
+import java.util.stream.Collectors;
 
 public class ValidationUtil {
     private ValidationUtil() {
@@ -34,7 +35,7 @@ public class ValidationUtil {
 
     public static ResponseEntity<String> getStringResponseEntity(BindingResult result, Logger logger) {
         StringBuilder sb = new StringBuilder();
-        result.getFieldErrors().stream().map(e -> sb.append(e.getField()).append(" ").append(e.getDefaultMessage()).append("<br>"));
+        result.getFieldErrors().stream().map(e -> sb.append(e.getField()).append(" ").append(e.getDefaultMessage()).append("<br>")).collect(Collectors.toList());
         logger.info("binding error: {} ", sb.toString());
         return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
     }

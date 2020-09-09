@@ -50,27 +50,27 @@ VALUES ((SELECT ID
          FROM MENUS m
          WHERE m.RESTAURANT_ID =
                (SELECT RESTAURANTS.ID FROM RESTAURANTS WHERE NAME = 'Restaurant 1')
-           AND m.DATE = '2020-07-03'), 'dish 1', 250.59),
+           AND m.DATE = '2020-07-03'), 'dish 1', 25059),
        ((SELECT ID
          FROM MENUS m
          WHERE m.RESTAURANT_ID =
                (SELECT RESTAURANTS.ID FROM RESTAURANTS WHERE NAME = 'Restaurant 1')
-           AND m.DATE = '2020-07-03'), 'dish 2', 300.33),
+           AND m.DATE = '2020-07-03'), 'dish 2', 30033),
        ((SELECT ID
          FROM MENUS m
          WHERE m.RESTAURANT_ID =
                (SELECT RESTAURANTS.ID FROM RESTAURANTS WHERE NAME = 'Restaurant 1')
-           AND m.DATE = '2020-07-02'), 'dish 3', 150.48),
+           AND m.DATE = '2020-07-02'), 'dish 3', 15048),
        ((SELECT ID
          FROM MENUS m
          WHERE m.RESTAURANT_ID =
                (SELECT RESTAURANTS.ID FROM RESTAURANTS WHERE NAME = 'Restaurant 1')
-           AND m.DATE = '2020-07-02'), 'dish 4', 100.99),
+           AND m.DATE = '2020-07-02'), 'dish 4', 10099),
        ((SELECT ID
          FROM MENUS m
          WHERE m.RESTAURANT_ID =
                (SELECT RESTAURANTS.ID FROM RESTAURANTS WHERE NAME = 'Restaurant 1')
-           AND m.DATE = current_date), 'dish 5', 200.16);
+           AND m.DATE = current_date), 'dish 5', 20016);
 -- dish
 -- Restaurant 2
 INSERT INTO dishes (menu_id,name,price)
@@ -78,27 +78,27 @@ VALUES ((SELECT ID
          FROM MENUS m
          WHERE m.RESTAURANT_ID =
                (SELECT RESTAURANTS.ID FROM RESTAURANTS WHERE NAME = 'Restaurant 2')
-           AND m.DATE = '2020-07-03'), 'dish 6', 50.33),
+           AND m.DATE = '2020-07-03'), 'dish 6', 5033),
        ((SELECT ID
          FROM MENUS m
          WHERE m.RESTAURANT_ID =
                (SELECT RESTAURANTS.ID FROM RESTAURANTS WHERE NAME = 'Restaurant 2')
-           AND m.DATE = '2020-07-03'), 'dish 7', 100.44),
+           AND m.DATE = '2020-07-03'), 'dish 7', 10044),
        ((SELECT ID
          FROM MENUS m
          WHERE m.RESTAURANT_ID =
                (SELECT RESTAURANTS.ID FROM RESTAURANTS WHERE NAME = 'Restaurant 2')
-           AND m.DATE = '2020-07-02'), 'dish 8', 200.55),
+           AND m.DATE = '2020-07-02'), 'dish 8', 20055),
        ((SELECT ID
          FROM MENUS m
          WHERE m.RESTAURANT_ID =
                (SELECT RESTAURANTS.ID FROM RESTAURANTS WHERE NAME = 'Restaurant 2')
-           AND m.DATE = '2020-07-02'), 'dish 9', 300.66),
+           AND m.DATE = '2020-07-02'), 'dish 9', 30066),
        ((SELECT ID
          FROM MENUS m
          WHERE m.RESTAURANT_ID =
                (SELECT RESTAURANTS.ID FROM RESTAURANTS WHERE NAME = 'Restaurant 2')
-           AND m.DATE = current_date), 'dish 10', 400.77);
+           AND m.DATE = current_date), 'dish 10', 40077);
 -- dish
 -- Restaurant 3
 INSERT INTO dishes (menu_id,name,price)
@@ -106,4 +106,4 @@ VALUES ((SELECT ID
          FROM MENUS m
          WHERE m.RESTAURANT_ID =
                (SELECT RESTAURANTS.ID FROM RESTAURANTS WHERE NAME = 'Restaurant 3')
-           AND m.DATE = '2020-07-03'), 'dish 11', 50.88);
+           AND m.DATE = '2020-07-03'), 'dish 11', 5088);

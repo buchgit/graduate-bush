@@ -1,6 +1,8 @@
 package ru.graduate.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.graduate.model.Restaurant;
@@ -19,6 +21,7 @@ public class RestaurantService {
         this.repository = repository;
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     public Restaurant create(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
         return repository.save(restaurant);
@@ -33,15 +36,18 @@ public class RestaurantService {
         return repository.getByName(name);
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     public void delete(int id) {
         ValidationUtil.checkNotFoundWithId(repository.delete(id) != 0, id);
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     public void update(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant must not be null");
         ValidationUtil.checkNotFoundWithId(repository.save(restaurant), restaurant.getId());
     }
 
+	@Cacheable("restaurants")
     public List<Restaurant> getActual(){
         return repository.findActualWithDish(LocalDate.now());
     }

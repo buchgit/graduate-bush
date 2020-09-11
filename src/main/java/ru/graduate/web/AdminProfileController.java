@@ -3,7 +3,6 @@ package ru.graduate.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,6 @@ import ru.graduate.repository.UserRepository;
 import ru.graduate.service.UserService;
 
 import javax.validation.Valid;
-import java.util.List;
 
 import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
 
@@ -22,7 +20,7 @@ import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
 @RequestMapping(AdminProfileController.REST_URL)
 public class AdminProfileController {
 
-    static final String REST_URL = "/rest/admin";
+    static final String REST_URL = "/rest/admin/user";
 
     private final Logger logger = LoggerFactory.getLogger(AdminProfileController.class);
 

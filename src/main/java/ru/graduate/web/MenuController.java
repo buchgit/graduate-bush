@@ -25,7 +25,7 @@ import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
 @RestController
 @RequestMapping(MenuController.MENU_URL)
 public class MenuController {
-    static final String MENU_URL = "/rest/menus";
+    static final String MENU_URL = "/rest";
 
     private final Logger logger = LoggerFactory.getLogger(MenuController.class);
 
@@ -40,7 +40,7 @@ public class MenuController {
      *** General section ***
      */
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/menus", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Menu> getAllFiltered(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                      @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
                                      @RequestParam(required = false) @Nullable Integer restaurantId) {
@@ -52,13 +52,13 @@ public class MenuController {
      *** Admin section ***
      */
 
-    @GetMapping("/admin/{id}")
+    @GetMapping("/admin/menus/{id}")
     public Menu get(@PathVariable int id) {
         logger.info("get(id) {} ", id);
         return service.get(id);
     }
 
-    @PostMapping("/admin")
+    @PostMapping("/admin/menus")
     public ResponseEntity<Menu> create(@RequestParam(required = true) @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                        @RequestParam int restaurantId) {
         Menu created = service.create(date, restaurantId);
@@ -70,7 +70,7 @@ public class MenuController {
         return ResponseEntity.created(responseUri).body(created);
     }
 
-    @PutMapping("/admin")
+    @PutMapping("/admin/menus")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<String> update(@Valid @RequestBody Menu menu, BindingResult result) {
         if (result.hasErrors()) {
@@ -82,7 +82,7 @@ public class MenuController {
         }
     }
 
-    @DeleteMapping("/admin/{id}")
+    @DeleteMapping("/admin/menus/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         logger.info("delete(id {} ", id);

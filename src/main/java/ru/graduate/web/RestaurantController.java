@@ -22,7 +22,7 @@ import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
 @RequestMapping(RestaurantController.RESTAURANTS_URL)
 public class RestaurantController {
 
-    static final String RESTAURANTS_URL = "/rest/restaurants";
+    static final String RESTAURANTS_URL = "/rest";
 
     private final Logger logger = LoggerFactory.getLogger(RestaurantController.class);
 
@@ -40,19 +40,19 @@ public class RestaurantController {
      *** General section ***
      */
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/restaurants", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Restaurant> getAll() {
         logger.info("getAll");
         return repository.findAll(Sort.by(Sort.Direction.DESC, "name"));
     }
 
-    @GetMapping(value = "/name", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/restaurants/name", produces = MediaType.APPLICATION_JSON_VALUE)
     public Restaurant getByName(@RequestParam String name) {
         logger.info("getByName(name) {} ", name);
         return service.getByName(name);
     }
 
-    @GetMapping(value = "/actual")
+    @GetMapping(value = "/restaurants/actual")
     public List<Restaurant>getActual(){
         logger.info("getActual()");
         return service.getActual();
@@ -62,13 +62,13 @@ public class RestaurantController {
      *** Admin section ***
      */
 
-    @GetMapping("/admin/{id}")
+    @GetMapping("/admin/restaurants/{id}")
     public Restaurant get(@PathVariable int id) {
         logger.info("get(id) {} ", id);
         return service.get(id);
     }
 
-    @PostMapping("/admin")
+    @PostMapping("/admin/restaurants")
     public ResponseEntity<String> create(@Valid @RequestBody Restaurant restaurant, BindingResult result) {
         if (result.hasErrors()) {
             return getStringResponseEntity(result, logger);
@@ -79,7 +79,7 @@ public class RestaurantController {
         }
     }
 
-    @PutMapping("/admin")
+    @PutMapping("/admin/restaurants")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<String> update(@Valid @RequestBody Restaurant restaurant, BindingResult result) {
         if (result.hasErrors()) {
@@ -91,7 +91,7 @@ public class RestaurantController {
         }
     }
 
-    @DeleteMapping("/admin/{id}")
+    @DeleteMapping("/admin/restaurants/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         logger.info("delete(id) {} ", id);

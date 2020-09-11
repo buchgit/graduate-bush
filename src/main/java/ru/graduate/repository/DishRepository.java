@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.graduate.model.Dish;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -31,7 +31,7 @@ public interface DishRepository extends JpaRepository<Dish, Integer> {
     List<Dish> getByMenu(@Param("menuId") int menuId);
 
     @Query("select d from Dish d where d.menu.date >=:startDate and d.menu.date<=:endDate and d.menu in (select m from Menu m where (:restaurantId is null or m.restaurant.id=:restaurantId))")
-    List<Dish> getBetweenByRestaurant(@Param("startDate") @NotNull LocalDateTime startDate,
-                                      @Param("endDate") @NotNull LocalDateTime endDate,
+    List<Dish> getBetweenByRestaurant(@Param("startDate") @NotNull LocalDate startDate,
+                                      @Param("endDate") @NotNull LocalDate endDate,
                                       @Param("restaurantId") @Nullable Integer restaurantId);
 }

@@ -103,12 +103,12 @@ Base URL: `localhost:8080`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/rest/admin|POST|Create new user|[look note](#note)|201|
-|/rest/admin/{id}|PUT|Update user profile|[look note](#note)|200|
-|/rest/admin/{id}|DELETE|Delete user profile|[look note](#note)|204|
-|/rest/admin/{id}|GET|Get user profile by ID|curl -s http://localhost:8080/rest/admin/100000 --user admin@gmail.com:admin|200|
-|/rest/admin?email=...|GET|Get user by email|[look note](#note)|200|
-|/rest/admin/{id}?enabled=...|POST|Set user enabled true/false|[look note](#note)|200|
+|/rest/admin/user|POST|Create new user|[look note](#note)|201|
+|/rest/admin/user/{id}|PUT|Update user profile|[look note](#note)|200|
+|/rest/admin/user/{id}|DELETE|Delete user profile|[look note](#note)|204|
+|/rest/admin/user/{id}|GET|Get user profile by ID|curl -s http://localhost:8080/rest/admin/user/100000 --user admin@gmail.com:admin|200|
+|/rest/admin/user?email=...|GET|Get user by email|[look note](#note)|200|
+|/rest/admin/user/{id}?enabled=...|POST|Set user enabled true/false|[look note](#note)|200|
 
 <sub>[to table of content](#content)</sub>
 
@@ -117,8 +117,8 @@ Base URL: `localhost:8080`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/rest/votes/admin?startDate=...?endDate=...?restaurantId=...?userId=|GET|Get all votes filtered by date, restaurants, and users (each parameter can be null)|[look note](#note)|200|
-|/rest/votes/admin/{id}|DELETE|Delete any vote (for exceptional situations)|[look note](#note)|400|
+|/rest/admin/votes?startDate=...?endDate=...?restaurantId=...?userId=|GET|Get all votes filtered by date, restaurants, and users (each parameter can be null)|[look note](#note)|200|
+|/rest/admin/votes/{id}|DELETE|Delete any vote (for exceptional situations)|[look note](#note)|400|
 
 <sub>[to table of content](#content)</sub>
 
@@ -127,10 +127,10 @@ Base URL: `localhost:8080`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/rest/restaurants/admin/{id}|GET|Get restaurant by id|[look note](#note)|200|
-|/rest/restaurants/admin|POST|Add new restaurant|[look note](#note)|201|
-|/rest/restaurants/admin|PUT|Update restaurant|[look note](#note)|204|
-|/rest/restaurants/admin/{id}|DELETE|Delete restaurant by ID|[look note](#note)|204|
+|/rest/admin/restaurants/{id}|GET|Get restaurant by id|[look note](#note)|200|
+|/rest/admin/restaurants|POST|Add new restaurant|[look note](#note)|201|
+|/rest/admin/restaurants|PUT|Update restaurant|[look note](#note)|204|
+|/rest/admin/restaurants/{id}|DELETE|Delete restaurant by ID|[look note](#note)|204|
 
 <sub>[to table of content](#content)</sub>
 
@@ -139,10 +139,10 @@ Base URL: `localhost:8080`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/rest/menus/admin/{id}|GET|Get menu by id|[look note](#note)|200|
-|/rest/menus/admin?date=...&restaurantId=...|POST|Add new menu of any restaurant|[look note](#note)|201|
-|/rest/menus/admin|PUT|Update menu|[look note](#note)|204|
-|/rest/menus/admin/{id}|DELETE|Delete menu by ID|[look note](#note)|204|
+|/rest/admin/menus/{id}|GET|Get menu by id|[look note](#note)|200|
+|/rest/admin/menus?date=...&restaurantId=...|POST|Add new menu of any restaurant|[look note](#note)|201|
+|/rest/admin/menus|PUT|Update menu|[look note](#note)|204|
+|/rest/admin/menus/{id}|DELETE|Delete menu by ID|[look note](#note)|204|
 
 <sub>[to table of content](#content)</sub>
 
@@ -151,10 +151,10 @@ Base URL: `localhost:8080`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/rest/dishes/admin/{id}|GET|Get dishes by id|[look note](#note)|200|
-|/rest/dishes/admin?menuId=...|POST|Add new dish of any menu|[look note](#note)|201|
-|/rest/dishes/admin|PUT|Update dish|[look note](#note)|204|
-|/rest/dishes/admin/{id}|DELETE|Delete dish by ID|[look note](#note)|204|
+|/rest/admin/dishes/{id}|GET|Get dishes by id|[look note](#note)|200|
+|/rest/admin/dishes?menuId=...|POST|Add new dish of any menu|[look note](#note)|201|
+|/rest/admin/dishes|PUT|Update dish|[look note](#note)|204|
+|/rest/admin/dishes/{id}|DELETE|Delete dish by ID|[look note](#note)|204|
 
 <sub>[to table of content](#content)</sub>
 

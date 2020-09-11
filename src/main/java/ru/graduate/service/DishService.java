@@ -53,8 +53,8 @@ public class DishService {
     }
 
     public List<Dish> getBetweenByRestaurant(LocalDate startDate, LocalDate endDate, Integer restaurantId) {
-        LocalDateTime startOfDay = TimeUtils.toBeginOfDay(startDate);
-        LocalDateTime endOfDay = TimeUtils.toEndOfDay(endDate);
-        return repository.getBetweenByRestaurant(startOfDay, endOfDay, restaurantId);
+        LocalDate startDay = TimeUtils.toMinDate(startDate);
+        LocalDate endDay = TimeUtils.toMaxDate(endDate);
+        return repository.getBetweenByRestaurant(startDay, endDay, restaurantId);
     }
 }

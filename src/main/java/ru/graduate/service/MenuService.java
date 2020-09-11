@@ -6,6 +6,7 @@ import org.springframework.util.Assert;
 import ru.graduate.model.Menu;
 import ru.graduate.repository.MenuRepository;
 import ru.graduate.repository.RestaurantRepository;
+import ru.graduate.utils.TimeUtils;
 import ru.graduate.utils.ValidationUtil;
 
 import java.time.LocalDate;
@@ -42,6 +43,8 @@ public class MenuService {
     }
 
     public List<Menu> getAllFiltered(LocalDate startDate, LocalDate endDate, Integer restaurantId) {
-        return repository.getAllFiltered(startDate, endDate, restaurantId);
+        LocalDate startDay = TimeUtils.toMinDate(startDate);
+        LocalDate endDay = TimeUtils.toMaxDate(endDate);
+        return repository.getAllFiltered(startDay, endDay, restaurantId);
     }
 }

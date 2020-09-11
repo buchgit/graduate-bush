@@ -27,7 +27,7 @@ import static ru.graduate.utils.ValidationUtil.getStringResponseEntity;
 @RestController
 @RequestMapping(VoteController.VOTE_URL)
 public class VoteController {
-    static final String VOTE_URL = "/rest/votes";
+    static final String VOTE_URL = "/rest";
 
     private Logger logger = LoggerFactory.getLogger(VoteController.class);
 
@@ -42,13 +42,13 @@ public class VoteController {
      *** General section ***
      */
 
-    @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/votes/user", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Vote> getAllActual() {
         logger.info("getAllActual() ");
         return service.getAllFiltered(LocalDate.now(),LocalDate.now(),null,null);
     }
 
-    @PostMapping
+    @PostMapping(value = "/votes")
     public ResponseEntity<Vote> create(@RequestParam int restaurantId,
                                        @AuthenticationPrincipal LoggedUser loggedUser) {
         LocalDate date = LocalDate.now();
@@ -61,7 +61,7 @@ public class VoteController {
         return ResponseEntity.created(responseUri).body(created);
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/votes", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<String> update(@Valid @RequestBody Vote vote, BindingResult result, @AuthenticationPrincipal LoggedUser loggedUser) {
         if (result.hasErrors()) {
@@ -73,7 +73,7 @@ public class VoteController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/votes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id, @AuthenticationPrincipal LoggedUser loggedUser) {
         logger.info("delete(id) {} ", loggedUser.getId());
@@ -84,7 +84,7 @@ public class VoteController {
      *** Admin section ***
      */
 
-    @GetMapping(value = "/admin", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/admin/votes", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Vote> getAllFiltered(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                      @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
                                      @RequestParam(required = false) @Nullable Integer restaurantId,
@@ -94,7 +94,7 @@ public class VoteController {
         return service.getAllFiltered(startDate, endDate, restaurantId, userId);
     }
 
-    @DeleteMapping("/admin/{id}")
+    @DeleteMapping("/admin/votes/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         logger.info("delete(id) {} ", id);

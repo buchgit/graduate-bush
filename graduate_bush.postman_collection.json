@@ -156,6 +156,26 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "get (unauth)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/rest/admin",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rest",
+										"admin"
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"protocolProfileBehavior": {},
@@ -289,42 +309,6 @@
 							"response": []
 						},
 						{
-							"name": "getAll",
-							"request": {
-								"auth": {
-									"type": "basic",
-									"basic": [
-										{
-											"key": "password",
-											"value": "admin",
-											"type": "string"
-										},
-										{
-											"key": "username",
-											"value": "admin@gmail.com",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/rest/admin/",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"rest",
-										"admin",
-										""
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "by email",
 							"request": {
 								"auth": {
@@ -401,6 +385,58 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "enabled",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin@gmail.com",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/rest/admin/user/100001?enabled=false",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rest",
+										"admin",
+										"user",
+										"100001"
+									],
+									"query": [
+										{
+											"key": "enabled",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"protocolProfileBehavior": {},
@@ -457,7 +493,7 @@
 							"response": []
 						},
 						{
-							"name": "getAllFiltered",
+							"name": "update before 11 am",
 							"request": {
 								"auth": {
 									"type": "basic",
@@ -474,10 +510,98 @@
 										}
 									]
 								},
-								"method": "GET",
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"id\": 100012,\r\n\"user\": {\r\n    \"id\": 100001\r\n},\r\n\"restaurant\": {\r\n    \"id\": 100003\r\n},\r\n\"date\": \"2020-07-03T11:00:00\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/rest/votes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rest",
+										"votes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update after 11 am",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "user",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "user@gmail.com",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"id\": 100012,\r\n\"user\": {\r\n    \"id\": 100001\r\n},\r\n\"restaurant\": {\r\n    \"id\": 100003\r\n},\r\n\"date\": \"2020-07-03T11:00:01\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/rest/votes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rest",
+										"votes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete (own)",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "user",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "user@gmail.com",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/rest/votes/user",
+									"raw": "http://localhost:8080/rest/votes/100012",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -486,7 +610,123 @@
 									"path": [
 										"rest",
 										"votes",
-										"user"
+										"100012"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllActual",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin@gmail.com",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/rest/votes/admin",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rest",
+										"votes",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "admin",
+					"item": [
+						{
+							"name": "delete",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin@gmail.com",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/rest/votes/admin/100014",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rest",
+										"votes",
+										"admin",
+										"100014"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllFiltered (all filters are null)",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin@gmail.com",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/rest/votes/admin",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rest",
+										"votes",
+										"admin"
 									]
 								}
 							},
@@ -729,174 +969,6 @@
 								}
 							},
 							"response": []
-						},
-						{
-							"name": "update before 11 am",
-							"request": {
-								"auth": {
-									"type": "basic",
-									"basic": [
-										{
-											"key": "password",
-											"value": "user",
-											"type": "string"
-										},
-										{
-											"key": "username",
-											"value": "user@gmail.com",
-											"type": "string"
-										}
-									]
-								},
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n\"id\": 100012,\r\n\"user\": {\r\n    \"id\": 100001\r\n},\r\n\"restaurant\": {\r\n    \"id\": 100003\r\n},\r\n\"date\": \"2020-07-03T11:00:00\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:8080/rest/votes",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"rest",
-										"votes"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update after 11 am",
-							"request": {
-								"auth": {
-									"type": "basic",
-									"basic": [
-										{
-											"key": "password",
-											"value": "user",
-											"type": "string"
-										},
-										{
-											"key": "username",
-											"value": "user@gmail.com",
-											"type": "string"
-										}
-									]
-								},
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n\"id\": 100012,\r\n\"user\": {\r\n    \"id\": 100001\r\n},\r\n\"restaurant\": {\r\n    \"id\": 100003\r\n},\r\n\"date\": \"2020-07-03T11:00:01\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:8080/rest/votes",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"rest",
-										"votes"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "delete (own)",
-							"request": {
-								"auth": {
-									"type": "basic",
-									"basic": [
-										{
-											"key": "password",
-											"value": "user",
-											"type": "string"
-										},
-										{
-											"key": "username",
-											"value": "user@gmail.com",
-											"type": "string"
-										}
-									]
-								},
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/rest/votes/100012",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"rest",
-										"votes",
-										"100012"
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "admin",
-					"item": [
-						{
-							"name": "delete",
-							"request": {
-								"auth": {
-									"type": "basic",
-									"basic": [
-										{
-											"key": "password",
-											"value": "admin",
-											"type": "string"
-										},
-										{
-											"key": "username",
-											"value": "admin@gmail.com",
-											"type": "string"
-										}
-									]
-								},
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/rest/votes/admin/100014",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"rest",
-										"votes",
-										"admin",
-										"100014"
-									]
-								}
-							},
-							"response": []
 						}
 					],
 					"protocolProfileBehavior": {},
@@ -967,6 +1039,42 @@
 											"key": "name",
 											"value": "Restaurant 3"
 										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getActual",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "user",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "user@gmail.com",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/rest/restaurants/actual",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rest",
+										"restaurants",
+										"actual"
 									]
 								}
 							},

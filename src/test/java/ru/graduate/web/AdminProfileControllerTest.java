@@ -74,15 +74,6 @@ class AdminProfileControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void getAll() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL)
-                .with(userHttpBasic(ADMIN)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(USER, ADMIN));
-    }
-
-    @Test
     void getByEmail() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + "/email")
                 .param("email", ADMIN.getEmail())

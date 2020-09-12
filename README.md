@@ -41,9 +41,9 @@ Base URL: `localhost:8080`
 
 |URL|HTTP method|Description|Curl|Response Code (success)|
 |---|:---:|---|---|:---:|
-|/rest/user/registration|POST|Registration|curl -s -i -X POST -d '{"name":"New User","email":"test@mail.ru","password":"test-password","roles":["USER"]}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/user/registration|201|
+|/rest/user/registration|POST|Registration|[look note](#note)|201|
 |/rest/user/{id}|GET|Get own profile|curl -s http://localhost:8080/rest/user --user user@gmail.com:user|200|
-|/rest/user|PUT|Update own profile|curl -s -X PUT -d '{"id":100000,"name":"User777","email":"user@gmail.com", "password":"user", "roles":["USER"]}' -H 'Content-Type: application/json' http://localhost:8080/rest/user --user user@gmail.com:user|204|
+|/rest/user|PUT|Update own profile|[look note](#note)|204|
 |/rest/user|DELETE|Delete own profile|curl -s -X DELETE http://localhost:8080/rest/user --user user@gmail.com:user|204|
 
 <sub>[to table of content](#content)</sub>
